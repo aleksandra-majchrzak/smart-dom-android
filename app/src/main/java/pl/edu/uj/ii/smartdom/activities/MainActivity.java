@@ -9,11 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.enums.SmartMenuItem;
+import pl.edu.uj.ii.smartdom.fragments.HomesFragment;
+import pl.edu.uj.ii.smartdom.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,6 +27,8 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawer;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+
+    private int CURRENT_NAV_ITEM_ID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,20 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        navigationView.getHeaderView(0)
+                .findViewById(R.id.app_imageView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new MainFragment(), MainFragment.TAG)
+                        .commit();
+
+                navigationView.getMenu().findItem(CURRENT_NAV_ITEM_ID).setChecked(false);
+                CURRENT_NAV_ITEM_ID = 0;
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(this);
         addCurrentRooms();
@@ -75,8 +94,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        CURRENT_NAV_ITEM_ID = id;
 
         if (id == R.id.nav_change_home) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new HomesFragment(), HomesFragment.TAG)
+                    .commit();
 
         } else if (id == R.id.nav_logout) {
 

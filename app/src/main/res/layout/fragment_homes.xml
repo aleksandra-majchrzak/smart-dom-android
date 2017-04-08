@@ -1,0 +1,48 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="pl.edu.uj.ii.smartdom.fragments.HomesFragment">
+
+    <!-- todo mozna by tu dodac jakis obrazek w tle-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/home_name_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="[home name]"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+        <Button
+            android:id="@+id/change_home_button"
+            style="@style/Base.Widget.AppCompat.ButtonBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_name_textView"
+            android:layout_marginTop="@dimen/top_margin"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/change_home" />
+
+        <Button
+            android:id="@+id/add_new_home_button"
+            style="@style/Base.Widget.AppCompat.ButtonBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/change_home_button"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/add_new_home" />
+
+    </RelativeLayout>
+
+
+</FrameLayout>

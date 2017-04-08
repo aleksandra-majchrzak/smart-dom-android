@@ -5,4 +5,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="change_home">CHANGE HOME</string>
+    <string name="add_new_home">ADD NEW HOME</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="login_caps">LOGIN</string>
+    <string name="sign_up">SIGN UP</string>
 </resources>
