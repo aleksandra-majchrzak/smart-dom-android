@@ -1,4 +1,4 @@
-package pl.edu.uj.ii.smartdom;
+package pl.edu.uj.ii.smartdom.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,6 +12,8 @@ import android.view.MenuItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.edu.uj.ii.smartdom.R;
+import pl.edu.uj.ii.smartdom.enums.SmartMenuItem;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,9 +50,9 @@ public class MainActivity extends AppCompatActivity
 
     private void addCurrentRooms() {
         // dynamically add rooms to drawer
-        navigationView.getMenu().getItem(3).getSubMenu().add(Menu.NONE, Menu.NONE, 0, "new room1");
-        navigationView.getMenu().getItem(3).getSubMenu().add(Menu.NONE, Menu.NONE, 0, "new room2");
-        navigationView.getMenu().getItem(3).getSubMenu().add(Menu.NONE, Menu.NONE, 0, "new room3");
+        navigationView.getMenu().getItem(SmartMenuItem.Rooms).getSubMenu().add(Menu.NONE, Menu.NONE, 0, "new room1");
+        navigationView.getMenu().getItem(4).getSubMenu().add(Menu.NONE, Menu.NONE, 0, "new room2");
+        navigationView.getMenu().getItem(4).getSubMenu().add(Menu.NONE, Menu.NONE, 0, "new room3");
     }
 
     @Override
