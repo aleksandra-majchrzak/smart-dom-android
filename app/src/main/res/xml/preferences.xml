@@ -1,0 +1,36 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="First section">
+
+        <CheckBoxPreference
+            android:defaultValue="default checkbox preference"
+            android:key="checkbox_preference"
+            android:title="title checkbox preference" />
+
+        <EditTextPreference
+            android:dependency="checkbox_preference"
+            android:dialogTitle="dialog title edittext preference"
+            android:key="edittext_preference"
+            android:summary="summary edittext preference"
+            android:title="title edittext preference" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="title second section">
+
+        <ListPreference
+            android:dialogTitle="dialog title list preference"
+            android:entries="@array/entries_list_preference"
+            android:entryValues="@array/entryvalues_list_preference"
+            android:key="list_preference"
+            android:title="title list preference" />
+
+        <Preference android:title="title intent preference">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://codepath.com/" />
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

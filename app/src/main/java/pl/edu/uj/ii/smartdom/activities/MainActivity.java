@@ -17,6 +17,7 @@ import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.enums.SmartMenuItem;
 import pl.edu.uj.ii.smartdom.fragments.HomesFragment;
 import pl.edu.uj.ii.smartdom.fragments.MainFragment;
+import pl.edu.uj.ii.smartdom.fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -104,7 +105,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
 
         } else if (id == R.id.nav_settings) {
-
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new SettingsFragment(), SettingsFragment.TAG)
+                    .commit();
         }
 
         drawer.closeDrawer(GravityCompat.START);
