@@ -2,30 +2,42 @@ package pl.edu.uj.ii.smartdom.fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.Button;
 
 import com.skydoves.colorpickerview.ColorPickerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import pl.edu.uj.ii.smartdom.R;
+import pl.edu.uj.ii.smartdom.server.SmartDomService;
+import pl.edu.uj.ii.smartdom.server.listeners.OnErrorListener;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ColorPickerFragment extends Fragment {
+public class ColorPickerFragment extends Fragment implements OnErrorListener {
 
     public static final String TAG = ColorPickerFragment.class.getName();
 
+    private static final int TIME_INTERVAL = 500;
+    private static long lastTime;
+
     @BindView(R.id.colorPickerView)
     ColorPickerView colorPicker;
+    @BindView(R.id.turn_on_button)
+    Button turnOnButton;
+    @BindView(R.id.turn_off_button)
+    Button turnOffButton;
 
     public ColorPickerFragment() {
-        // Required empty public constructor
+        lastTime = System.nanoTime();
     }
 
 
@@ -49,8 +61,27 @@ public class ColorPickerFragment extends Fragment {
             public void onColorSelected(int color) {
                 int[] rgb = colorPicker.getColorRGB();
 
-                Toast.makeText(getContext(), "red: " + rgb[0] + " green: " + rgb[1] + " blue: " + rgb[2], Toast.LENGTH_SHORT).show();
+                if (System.nanoTime() - lastTime > TIME_INTERVAL) {
+                    Log.d("setStripeColor", "red: " + rgb[0] + " green: " + rgb[1] + " blue: " + rgb[2]);
+                    SmartDomService.getInstance().setStripColor(rgb[0], rgb[1], rgb[2], ColorPickerFragment.this);
+                    lastTime = System.nanoTime();
+                }
             }
         });
+    }
+
+    @OnClick(R.id.turn_on_button)
+    public void onTurnOnButtonClick() {
+        SmartDomService.getInstance().turnOnLight(this);
+    }
+
+    @OnClick(R.id.turn_off_button)
+    public void onTurnOffButtonClick() {
+        SmartDomService.getInstance().turnOffLight(this);
+    }
+
+    @Override
+    public void onConnectionError() {
+        Snackbar.make(getView(), "Could not connect with module", Snackbar.LENGTH_SHORT).show();
     }
 }

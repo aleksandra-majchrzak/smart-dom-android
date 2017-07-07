@@ -22,7 +22,29 @@
         android:layout_above="@+id/colorPickerView"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="42dp"
-        android:text="Led stripe color"
+        android:text="@string/led_stripe_color"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+    <Button
+        android:id="@+id/turn_on_button"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/colorPickerView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/colorPickerView"
+        android:layout_marginBottom="25dp"
+        android:text="@string/turn_on" />
+
+    <Button
+        android:id="@+id/turn_off_button"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/colorPickerView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/colorPickerView"
+        android:layout_marginBottom="25dp"
+        android:text="@string/turn_off" />
 
 </RelativeLayout>
