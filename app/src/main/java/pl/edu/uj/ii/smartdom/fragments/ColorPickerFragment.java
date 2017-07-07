@@ -18,6 +18,7 @@ import butterknife.OnClick;
 import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.server.SmartDomService;
 import pl.edu.uj.ii.smartdom.server.listeners.OnErrorListener;
+import rx.Subscription;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +36,10 @@ public class ColorPickerFragment extends Fragment implements OnErrorListener {
     Button turnOnButton;
     @BindView(R.id.turn_off_button)
     Button turnOffButton;
+
+    Subscription turnOnSubscrition;
+    Subscription turnOffSubscrition;
+    Subscription setStripeSubscrition;
 
     public ColorPickerFragment() {
         lastTime = System.nanoTime();
@@ -63,7 +68,7 @@ public class ColorPickerFragment extends Fragment implements OnErrorListener {
 
                 if (System.nanoTime() - lastTime > TIME_INTERVAL) {
                     Log.d("setStripeColor", "red: " + rgb[0] + " green: " + rgb[1] + " blue: " + rgb[2]);
-                    SmartDomService.getInstance().setStripColor(rgb[0], rgb[1], rgb[2], ColorPickerFragment.this);
+                    setStripeSubscrition = SmartDomService.getInstance().setStripColor(rgb[0], rgb[1], rgb[2], ColorPickerFragment.this);
                     lastTime = System.nanoTime();
                 }
             }
@@ -72,16 +77,30 @@ public class ColorPickerFragment extends Fragment implements OnErrorListener {
 
     @OnClick(R.id.turn_on_button)
     public void onTurnOnButtonClick() {
-        SmartDomService.getInstance().turnOnLight(this);
+        turnOnSubscrition = SmartDomService.getInstance().turnOnLight(this);
     }
 
     @OnClick(R.id.turn_off_button)
     public void onTurnOffButtonClick() {
-        SmartDomService.getInstance().turnOffLight(this);
+        turnOffSubscrition = SmartDomService.getInstance().turnOffLight(this);
     }
 
     @Override
     public void onConnectionError() {
         Snackbar.make(getView(), "Could not connect with module", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        if (turnOnSubscrition != null)
+            turnOnSubscrition.unsubscribe();
+
+        if (turnOffSubscrition != null)
+            turnOffSubscrition.unsubscribe();
+
+        if (setStripeSubscrition != null)
+            setStripeSubscrition.unsubscribe();
     }
 }
