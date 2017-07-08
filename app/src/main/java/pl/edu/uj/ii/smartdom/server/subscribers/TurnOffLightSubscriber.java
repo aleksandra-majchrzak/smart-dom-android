@@ -4,7 +4,6 @@ import android.util.Log;
 
 import okhttp3.ResponseBody;
 import pl.edu.uj.ii.smartdom.server.listeners.OnErrorListener;
-import pl.edu.uj.ii.smartdom.server.listeners.TurnOffLightSubscriberListener;
 import rx.Subscriber;
 
 /**

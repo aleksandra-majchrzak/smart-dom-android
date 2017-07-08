@@ -5,7 +5,17 @@ import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import pl.edu.uj.ii.smartdom.server.listeners.GetCO2SubscriberListener;
+import pl.edu.uj.ii.smartdom.server.listeners.GetCOSubscriberListener;
+import pl.edu.uj.ii.smartdom.server.listeners.GetGasSubscriberListener;
+import pl.edu.uj.ii.smartdom.server.listeners.GetHumiditySubscriberListener;
+import pl.edu.uj.ii.smartdom.server.listeners.GetTempSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.OnErrorListener;
+import pl.edu.uj.ii.smartdom.server.subscribers.GetCO2Subscriber;
+import pl.edu.uj.ii.smartdom.server.subscribers.GetCOSubscriber;
+import pl.edu.uj.ii.smartdom.server.subscribers.GetGasSubscriber;
+import pl.edu.uj.ii.smartdom.server.subscribers.GetHumiditySubscriber;
+import pl.edu.uj.ii.smartdom.server.subscribers.GetTempSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.SetStripeColorSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.TurnOffLightSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.TurnOnLightSubscriber;
@@ -38,7 +48,8 @@ public class SmartDomService {
                     .client(client)
                     .build();
 
-            api = retrofit.create(SmartDomApi.class);
+            //api = retrofit.create(SmartDomApi.class);
+            api = new MockSmartDomApi();
         }
     }
 
@@ -73,5 +84,40 @@ public class SmartDomService {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SetStripeColorSubscriber(listener));
+    }
+
+    public Subscription getTemperature(GetTempSubscriberListener listener) {
+        return api.getMeteo("temperature")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new GetTempSubscriber(listener));
+    }
+
+    public Subscription getHumidity(GetHumiditySubscriberListener listener) {
+        return api.getMeteo("humidity")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new GetHumiditySubscriber(listener));
+    }
+
+    public Subscription getCO(GetCOSubscriberListener listener) {
+        return api.getMeteo("co")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new GetCOSubscriber(listener));
+    }
+
+    public Subscription getCO2(GetCO2SubscriberListener listener) {
+        return api.getMeteo("co2")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new GetCO2Subscriber(listener));
+    }
+
+    public Subscription getGas(GetGasSubscriberListener listener) {
+        return api.getMeteo("gas")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new GetGasSubscriber(listener));
     }
 }
