@@ -18,6 +18,7 @@ import pl.edu.uj.ii.smartdom.enums.SmartMenuItem;
 import pl.edu.uj.ii.smartdom.fragments.ColorPickerFragment;
 import pl.edu.uj.ii.smartdom.fragments.HomesFragment;
 import pl.edu.uj.ii.smartdom.fragments.MainFragment;
+import pl.edu.uj.ii.smartdom.fragments.MeteorologicalStationFragment;
 import pl.edu.uj.ii.smartdom.fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -72,8 +73,8 @@ public class MainActivity extends AppCompatActivity
     private void addCurrentRooms() {
         // dynamically add rooms to drawer
         navigationView.getMenu().getItem(SmartMenuItem.Rooms).getSubMenu().add(Menu.NONE, Menu.NONE, 0, "new room1");
-        navigationView.getMenu().getItem(4).getSubMenu().add(Menu.NONE, Menu.NONE, 0, "new room2");
-        navigationView.getMenu().getItem(4).getSubMenu().add(Menu.NONE, Menu.NONE, 0, "new room3");
+        navigationView.getMenu().getItem(SmartMenuItem.Rooms).getSubMenu().add(Menu.NONE, Menu.NONE, 0, "new room2");
+        navigationView.getMenu().getItem(SmartMenuItem.Rooms).getSubMenu().add(Menu.NONE, Menu.NONE, 0, "new room3");
     }
 
     @Override
@@ -109,9 +110,13 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new SettingsFragment(), SettingsFragment.TAG)
                     .commit();
-        } else if(id == R.id.nav_family){
+        } else if (id == R.id.nav_family) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new ColorPickerFragment(), ColorPickerFragment.TAG)
+                    .commit();
+        } else if (id == R.id.nav_meteo) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new MeteorologicalStationFragment(), MeteorologicalStationFragment.TAG)
                     .commit();
         }
 

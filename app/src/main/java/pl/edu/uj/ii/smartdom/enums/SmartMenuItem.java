@@ -9,6 +9,7 @@ public interface SmartMenuItem {
     int Settings = 1;
     int LogOut = 2;
     int Family = 3;
-    int Rooms = 4;
+    int Meteo = 4;
+    int Rooms = 5;
 
 }

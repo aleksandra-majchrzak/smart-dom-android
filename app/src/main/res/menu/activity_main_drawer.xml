@@ -24,6 +24,10 @@
             android:id="@+id/nav_family"
             android:icon="@drawable/ic_family"
             android:title="Family" />
+        <item
+            android:id="@+id/nav_meteo"
+            android:icon="@drawable/ic_family"
+            android:title="Meteo" />
     </group>
     <item
         android:id="@+id/nav_rooms"

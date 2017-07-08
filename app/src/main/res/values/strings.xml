@@ -18,6 +18,12 @@
     <string name="turn_on">TURN ON</string>
     <string name="turn_off">TURN OFF</string>
     <string name="led_stripe_color">Led stripe color</string>
+    <string name="temperature">Temperature:</string>
+    <string name="meteorology">Meteorology</string>
+    <string name="humidity">Humidity:</string>
+    <string name="gases">Gases</string>
+    <string name="co">CO:</string>
+    <string name="gas">Gas:</string>
 
     <array name="entries_list_preference">
         <item>First preference entry</item>
