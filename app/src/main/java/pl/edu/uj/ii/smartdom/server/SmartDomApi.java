@@ -3,8 +3,11 @@ package pl.edu.uj.ii.smartdom.server;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
+import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
 import pl.edu.uj.ii.smartdom.server.entities.Meteo;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
@@ -28,5 +31,11 @@ public interface SmartDomApi {
 
     @GET("/meteo")
     public Observable<Meteo> getMeteo(@Query("param") String param);
+
+    @POST("/openDoor")
+    public Observable<DoorResponse> openDoor(@Body Boolean isOpen);
+
+    @GET("/openDoor")
+    public Observable<DoorResponse> isDoorOpen();
 
 }

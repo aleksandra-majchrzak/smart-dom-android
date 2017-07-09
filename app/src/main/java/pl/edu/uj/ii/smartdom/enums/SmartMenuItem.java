@@ -10,6 +10,7 @@ public interface SmartMenuItem {
     int LogOut = 2;
     int Family = 3;
     int Meteo = 4;
-    int Rooms = 5;
+    int DoorMotor = 5;
+    int Rooms = 6;
 
 }

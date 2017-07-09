@@ -24,6 +24,9 @@
     <string name="gases">Gases</string>
     <string name="co">CO:</string>
     <string name="gas">Gas:</string>
+    <string name="door_motor">Door Motor</string>
+    <string name="open_door">OPEN DOOR</string>
+    <string name="close_door">CLOSE DOOR</string>
 
     <array name="entries_list_preference">
         <item>First preference entry</item>

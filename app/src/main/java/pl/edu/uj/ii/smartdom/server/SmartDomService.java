@@ -10,12 +10,16 @@ import pl.edu.uj.ii.smartdom.server.listeners.GetCOSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetGasSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetHumiditySubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetTempSubscriberListener;
+import pl.edu.uj.ii.smartdom.server.listeners.IsDoorOpenSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.OnErrorListener;
+import pl.edu.uj.ii.smartdom.server.listeners.OpenDoorSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetCO2Subscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetCOSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetGasSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetHumiditySubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetTempSubscriber;
+import pl.edu.uj.ii.smartdom.server.subscribers.IsDoorOpenSubscriber;
+import pl.edu.uj.ii.smartdom.server.subscribers.OpenDoorSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.SetStripeColorSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.TurnOffLightSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.TurnOnLightSubscriber;
@@ -119,5 +123,20 @@ public class SmartDomService {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new GetGasSubscriber(listener));
+    }
+
+    public Subscription openDoor(boolean isOpen, OpenDoorSubscriberListener listener) {
+        return api.openDoor(isOpen)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new OpenDoorSubscriber(listener));
+
+    }
+
+    public Subscription isDoorOpen(IsDoorOpenSubscriberListener listener) {
+        return api.isDoorOpen()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new IsDoorOpenSubscriber(listener));
     }
 }

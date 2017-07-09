@@ -7,7 +7,9 @@ import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import okio.BufferedSource;
+import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
 import pl.edu.uj.ii.smartdom.server.entities.Meteo;
+import retrofit2.http.Body;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
@@ -17,6 +19,9 @@ import rx.Observable;
  */
 
 public class MockSmartDomApi implements SmartDomApi {
+
+    private static boolean isOpen = true;
+
     @Override
     public Observable<ResponseBody> turnOnLight() {
         return Observable.just(mockResponse);
@@ -58,6 +63,20 @@ public class MockSmartDomApi implements SmartDomApi {
         }
 
         return Observable.just(result);
+    }
+
+    @Override
+    public Observable<DoorResponse> openDoor(@Body Boolean isOpen) {
+        DoorResponse resp = new DoorResponse();
+        resp.isOpen = isOpen;
+        return Observable.just(resp);
+    }
+
+    @Override
+    public Observable<DoorResponse> isDoorOpen() {
+        DoorResponse resp = new DoorResponse();
+        resp.isOpen = isOpen;
+        return Observable.just(resp);
     }
 
     private ResponseBody mockResponse = new ResponseBody() {

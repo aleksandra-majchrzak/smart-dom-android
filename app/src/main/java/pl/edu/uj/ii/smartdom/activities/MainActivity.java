@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.enums.SmartMenuItem;
 import pl.edu.uj.ii.smartdom.fragments.ColorPickerFragment;
+import pl.edu.uj.ii.smartdom.fragments.DoorMotorFragment;
 import pl.edu.uj.ii.smartdom.fragments.HomesFragment;
 import pl.edu.uj.ii.smartdom.fragments.MainFragment;
 import pl.edu.uj.ii.smartdom.fragments.MeteorologicalStationFragment;
@@ -46,6 +47,10 @@ public class MainActivity extends AppCompatActivity
     private void initComponents() {
 
         setSupportActionBar(toolbar);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new MainFragment(), MainFragment.TAG)
+                .commit();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -117,6 +122,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_meteo) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new MeteorologicalStationFragment(), MeteorologicalStationFragment.TAG)
+                    .commit();
+        } else if (id == R.id.nav_motor) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new DoorMotorFragment(), DoorMotorFragment.TAG)
                     .commit();
         }
 
