@@ -27,7 +27,7 @@ public class ColorPickerFragment extends Fragment implements OnErrorListener {
 
     public static final String TAG = ColorPickerFragment.class.getName();
 
-    private static final int TIME_INTERVAL = 500;
+    private static final int TIME_INTERVAL = 200;
     private static long lastTime;
 
     @BindView(R.id.colorPickerView)
@@ -42,7 +42,7 @@ public class ColorPickerFragment extends Fragment implements OnErrorListener {
     Subscription setStripeSubscrition;
 
     public ColorPickerFragment() {
-        lastTime = System.nanoTime();
+        lastTime = System.currentTimeMillis();
     }
 
 
@@ -66,10 +66,10 @@ public class ColorPickerFragment extends Fragment implements OnErrorListener {
             public void onColorSelected(int color) {
                 int[] rgb = colorPicker.getColorRGB();
 
-                if (System.nanoTime() - lastTime > TIME_INTERVAL) {
+                if (System.currentTimeMillis() - lastTime > TIME_INTERVAL) {
                     Log.d("setStripeColor", "red: " + rgb[0] + " green: " + rgb[1] + " blue: " + rgb[2]);
                     setStripeSubscrition = SmartDomService.getInstance().setStripColor(rgb[0], rgb[1], rgb[2], ColorPickerFragment.this);
-                    lastTime = System.nanoTime();
+                    lastTime = System.currentTimeMillis();
                 }
             }
         });

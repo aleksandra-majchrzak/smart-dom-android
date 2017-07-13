@@ -52,8 +52,8 @@ public class SmartDomService {
                     .client(client)
                     .build();
 
-            //api = retrofit.create(SmartDomApi.class);
-            api = new MockSmartDomApi();
+            api = retrofit.create(SmartDomApi.class);
+            //api = new MockSmartDomApi();
         }
     }
 
