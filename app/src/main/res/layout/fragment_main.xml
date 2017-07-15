@@ -50,14 +50,6 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:text="@string/login_caps" />
 
-            <Button
-                android:id="@+id/sign_up_button"
-                style="@style/Base.Widget.AppCompat.ButtonBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:text="@string/sign_up" />
-
         </LinearLayout>
 
         <LinearLayout

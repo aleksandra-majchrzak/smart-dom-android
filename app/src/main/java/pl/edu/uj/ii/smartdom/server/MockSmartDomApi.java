@@ -8,7 +8,9 @@ import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import okio.BufferedSource;
 import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
+import pl.edu.uj.ii.smartdom.server.entities.LoginResponse;
 import pl.edu.uj.ii.smartdom.server.entities.Meteo;
+import pl.edu.uj.ii.smartdom.server.entities.User;
 import retrofit2.http.Body;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -21,6 +23,11 @@ import rx.Observable;
 public class MockSmartDomApi implements SmartDomApi {
 
     private static boolean isOpen = true;
+
+    @Override
+    public Observable<LoginResponse> login(@Body User user) {
+        return null;
+    }
 
     @Override
     public Observable<ResponseBody> turnOnLight() {

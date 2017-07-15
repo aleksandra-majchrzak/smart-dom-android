@@ -5,12 +5,14 @@ import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import pl.edu.uj.ii.smartdom.server.entities.User;
 import pl.edu.uj.ii.smartdom.server.listeners.GetCO2SubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetCOSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetGasSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetHumiditySubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetTempSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.IsDoorOpenSubscriberListener;
+import pl.edu.uj.ii.smartdom.server.listeners.LoginSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.OnErrorListener;
 import pl.edu.uj.ii.smartdom.server.listeners.OpenDoorSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetCO2Subscriber;
@@ -19,6 +21,7 @@ import pl.edu.uj.ii.smartdom.server.subscribers.GetGasSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetHumiditySubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetTempSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.IsDoorOpenSubscriber;
+import pl.edu.uj.ii.smartdom.server.subscribers.LoginSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.OpenDoorSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.SetStripeColorSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.TurnOffLightSubscriber;
@@ -62,6 +65,15 @@ public class SmartDomService {
             service = new SmartDomService();
         }
         return service;
+    }
+
+    public Subscription login(String login, String password, LoginSubscriberListener listener) {
+        User user = new User(login, password);
+
+        return api.login(user)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new LoginSubscriber(listener));
     }
 
     public Subscription turnOnLight(OnErrorListener listener) {
