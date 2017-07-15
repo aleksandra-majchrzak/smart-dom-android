@@ -5,6 +5,7 @@ import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import pl.edu.uj.ii.smartdom.server.entities.Door;
 import pl.edu.uj.ii.smartdom.server.entities.User;
 import pl.edu.uj.ii.smartdom.server.listeners.GetCO2SubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetCOSubscriberListener;
@@ -28,6 +29,7 @@ import pl.edu.uj.ii.smartdom.server.subscribers.TurnOffLightSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.TurnOnLightSubscriber;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -41,7 +43,8 @@ public class SmartDomService {
     private static SmartDomService service;
     private static SmartDomApi api;
 
-    private static final String BASE_URL = "http://192.168.100.106//";
+    //private static final String BASE_URL = "http://192.168.100.106//";
+    private static final String BASE_URL = "http://192.168.100.104:4567/";
 
     private SmartDomService() {
         if (api == null) {
@@ -51,6 +54,7 @@ public class SmartDomService {
 
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .client(client)
                     .build();
@@ -138,7 +142,7 @@ public class SmartDomService {
     }
 
     public Subscription openDoor(boolean isOpen, OpenDoorSubscriberListener listener) {
-        return api.openDoor(isOpen)
+        return api.openDoor(new Door(isOpen))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new OpenDoorSubscriber(listener));

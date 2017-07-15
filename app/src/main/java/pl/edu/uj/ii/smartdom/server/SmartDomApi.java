@@ -3,6 +3,7 @@ package pl.edu.uj.ii.smartdom.server;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
+import pl.edu.uj.ii.smartdom.server.entities.Door;
 import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
 import pl.edu.uj.ii.smartdom.server.entities.LoginResponse;
 import pl.edu.uj.ii.smartdom.server.entities.Meteo;
@@ -20,27 +21,27 @@ import rx.Observable;
 
 public interface SmartDomApi {
 
-    @POST("/login")
+    @POST("api/login")
     public Observable<LoginResponse> login(@Body User user);
 
     //todo w tych metodach powinnam tez miec odniesienie do konkretnego kontrolera- jakis id kontrolera czy cos
 
-    @GET("/turnOnLight")
+    @POST("api/turnOnLight")
     public Observable<ResponseBody> turnOnLight();
 
-    @GET("/turnOffLight")
+    @POST("api/turnOffLight")
     public Observable<ResponseBody> turnOffLight();
 
-    @GET("/setStripColor")
+    @POST("api/setStripColor")
     public Observable<ResponseBody> setStripColor(@QueryMap Map<String, Integer> rgb);
 
-    @GET("/meteo")
+    @GET("api/meteo")
     public Observable<Meteo> getMeteo(@Query("param") String param);
 
-    @POST("/openDoor")
-    public Observable<DoorResponse> openDoor(@Body Boolean isOpen);
+    @POST("api/openDoor")
+    public Observable<DoorResponse> openDoor(@Body Door door);
 
-    @GET("/openDoor")
+    @GET("api/openDoor")
     public Observable<DoorResponse> isDoorOpen();
 
 }

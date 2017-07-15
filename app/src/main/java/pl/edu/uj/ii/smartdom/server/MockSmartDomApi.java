@@ -7,6 +7,7 @@ import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import okio.BufferedSource;
+import pl.edu.uj.ii.smartdom.server.entities.Door;
 import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
 import pl.edu.uj.ii.smartdom.server.entities.LoginResponse;
 import pl.edu.uj.ii.smartdom.server.entities.Meteo;
@@ -73,9 +74,10 @@ public class MockSmartDomApi implements SmartDomApi {
     }
 
     @Override
-    public Observable<DoorResponse> openDoor(@Body Boolean isOpen) {
+    public Observable<DoorResponse> openDoor(@Body Door door) {
         DoorResponse resp = new DoorResponse();
-        resp.isOpen = isOpen;
+        resp.isOpen = door.isOpen;
+        MockSmartDomApi.isOpen = door.isOpen;
         return Observable.just(resp);
     }
 
