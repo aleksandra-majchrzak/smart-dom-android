@@ -2,7 +2,6 @@ package pl.edu.uj.ii.smartdom.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.server.SmartDomService;
 import pl.edu.uj.ii.smartdom.server.listeners.LoginSubscriberListener;
 
-public class MainFragment extends Fragment implements LoginSubscriberListener {
+public class MainFragment extends MainSmartFragment implements LoginSubscriberListener {
 
     public final static String TAG = MainFragment.class.getName();
 
@@ -51,9 +50,10 @@ public class MainFragment extends Fragment implements LoginSubscriberListener {
     }
 
     @Override
-    public void onLoginSuccess() {
+    public void onLoginSuccess(String login, String token) {
         // todo obsługa ekranu po logowaniu
         Snackbar.make(getView(), "Login success", Snackbar.LENGTH_SHORT).show();
+        getMainActvity().saveAuthentication(login, token);
     }
 
     @Override

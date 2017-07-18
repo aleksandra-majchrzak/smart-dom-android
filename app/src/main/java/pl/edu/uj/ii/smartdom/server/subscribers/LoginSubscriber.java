@@ -34,6 +34,6 @@ public class LoginSubscriber extends Subscriber<LoginResponse> {
 
     @Override
     public void onNext(LoginResponse loginResponse) {
-        listener.onLoginSuccess();
+        listener.onLoginSuccess(loginResponse.userLogin, loginResponse.userToken);
     }
 }

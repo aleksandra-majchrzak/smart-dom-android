@@ -2,15 +2,18 @@ package pl.edu.uj.ii.smartdom.server;
 
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import okio.BufferedSource;
+import pl.edu.uj.ii.smartdom.server.entities.Authentication;
 import pl.edu.uj.ii.smartdom.server.entities.Door;
 import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
 import pl.edu.uj.ii.smartdom.server.entities.LoginResponse;
 import pl.edu.uj.ii.smartdom.server.entities.Meteo;
+import pl.edu.uj.ii.smartdom.server.entities.RoomResponse;
 import pl.edu.uj.ii.smartdom.server.entities.User;
 import retrofit2.http.Body;
 import retrofit2.http.Query;
@@ -31,22 +34,27 @@ public class MockSmartDomApi implements SmartDomApi {
     }
 
     @Override
-    public Observable<ResponseBody> turnOnLight() {
+    public Observable<ArrayList<RoomResponse>> getRooms(@Body Authentication authentication) {
+        return Observable.just(new ArrayList<RoomResponse>());
+    }
+
+    @Override
+    public Observable<ResponseBody> turnOnLight(@Body Authentication authentication) {
         return Observable.just(mockResponse);
     }
 
     @Override
-    public Observable<ResponseBody> turnOffLight() {
+    public Observable<ResponseBody> turnOffLight(@Body Authentication authentication) {
         return Observable.just(mockResponse);
     }
 
     @Override
-    public Observable<ResponseBody> setStripColor(@QueryMap Map<String, Integer> rgb) {
+    public Observable<ResponseBody> setStripColor(@Body Authentication authentication, @QueryMap Map<String, Integer> rgb) {
         return Observable.just(mockResponse);
     }
 
     @Override
-    public Observable<Meteo> getMeteo(@Query("param") String param) {
+    public Observable<Meteo> getMeteo(@Body Authentication authentication, @Query("param") String param) {
 
         Meteo result = new Meteo();
 
@@ -74,7 +82,7 @@ public class MockSmartDomApi implements SmartDomApi {
     }
 
     @Override
-    public Observable<DoorResponse> openDoor(@Body Door door) {
+    public Observable<DoorResponse> openDoor(@Body Authentication authentication, @Body Door door) {
         DoorResponse resp = new DoorResponse();
         resp.isOpen = door.isOpen;
         MockSmartDomApi.isOpen = door.isOpen;
@@ -82,7 +90,7 @@ public class MockSmartDomApi implements SmartDomApi {
     }
 
     @Override
-    public Observable<DoorResponse> isDoorOpen() {
+    public Observable<DoorResponse> isDoorOpen(@Body Authentication authentication) {
         DoorResponse resp = new DoorResponse();
         resp.isOpen = isOpen;
         return Observable.just(resp);

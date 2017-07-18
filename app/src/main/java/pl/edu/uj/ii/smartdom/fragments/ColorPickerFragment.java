@@ -23,7 +23,7 @@ import rx.Subscription;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ColorPickerFragment extends Fragment implements OnErrorListener {
+public class ColorPickerFragment extends MainSmartFragment implements OnErrorListener {
 
     public static final String TAG = ColorPickerFragment.class.getName();
 
@@ -68,7 +68,7 @@ public class ColorPickerFragment extends Fragment implements OnErrorListener {
 
                 if (System.currentTimeMillis() - lastTime > TIME_INTERVAL) {
                     Log.d("setStripeColor", "red: " + rgb[0] + " green: " + rgb[1] + " blue: " + rgb[2]);
-                    setStripeSubscrition = SmartDomService.getInstance().setStripColor(rgb[0], rgb[1], rgb[2], ColorPickerFragment.this);
+                    setStripeSubscrition = SmartDomService.getInstance().setStripColor(rgb[0], rgb[1], rgb[2], ColorPickerFragment.this, getAuth());
                     lastTime = System.currentTimeMillis();
                 }
             }
@@ -77,12 +77,12 @@ public class ColorPickerFragment extends Fragment implements OnErrorListener {
 
     @OnClick(R.id.turn_on_button)
     public void onTurnOnButtonClick() {
-        turnOnSubscrition = SmartDomService.getInstance().turnOnLight(this);
+        turnOnSubscrition = SmartDomService.getInstance().turnOnLight(this, getAuth());
     }
 
     @OnClick(R.id.turn_off_button)
     public void onTurnOffButtonClick() {
-        turnOffSubscrition = SmartDomService.getInstance().turnOffLight(this);
+        turnOffSubscrition = SmartDomService.getInstance().turnOffLight(this, getAuth());
     }
 
     @Override

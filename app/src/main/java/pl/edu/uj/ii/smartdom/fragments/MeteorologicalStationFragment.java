@@ -23,7 +23,7 @@ import pl.edu.uj.ii.smartdom.server.listeners.GetTempSubscriberListener;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MeteorologicalStationFragment extends Fragment implements GetCO2SubscriberListener,
+public class MeteorologicalStationFragment extends MainSmartFragment implements GetCO2SubscriberListener,
         GetCOSubscriberListener, GetGasSubscriberListener, GetHumiditySubscriberListener, GetTempSubscriberListener {
 
     public static final String TAG = MeteorologicalStationFragment.class.getName();
@@ -93,10 +93,10 @@ public class MeteorologicalStationFragment extends Fragment implements GetCO2Sub
 
     @OnClick(R.id.refresh_meteo_button)
     public void onRefreshMeteoButtonClick() {
-        SmartDomService.getInstance().getCO(this);
-        SmartDomService.getInstance().getCO2(this);
-        SmartDomService.getInstance().getGas(this);
-        SmartDomService.getInstance().getHumidity(this);
-        SmartDomService.getInstance().getTemperature(this);
+        SmartDomService.getInstance().getCO(this, getAuth());
+        SmartDomService.getInstance().getCO2(this, getAuth());
+        SmartDomService.getInstance().getGas(this, getAuth());
+        SmartDomService.getInstance().getHumidity(this, getAuth());
+        SmartDomService.getInstance().getTemperature(this, getAuth());
     }
 }

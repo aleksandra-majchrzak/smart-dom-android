@@ -7,5 +7,5 @@ package pl.edu.uj.ii.smartdom.server.listeners;
 public interface LoginSubscriberListener extends OnErrorListener {
     void onLoginError();
 
-    void onLoginSuccess();
+    void onLoginSuccess(String login, String token);
 }

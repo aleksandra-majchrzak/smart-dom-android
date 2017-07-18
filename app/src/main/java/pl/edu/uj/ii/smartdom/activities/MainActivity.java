@@ -1,5 +1,6 @@
 package pl.edu.uj.ii.smartdom.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +14,7 @@ import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.edu.uj.ii.smartdom.Constants;
 import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.enums.SmartMenuItem;
 import pl.edu.uj.ii.smartdom.fragments.ColorPickerFragment;
@@ -21,6 +23,7 @@ import pl.edu.uj.ii.smartdom.fragments.HomesFragment;
 import pl.edu.uj.ii.smartdom.fragments.MainFragment;
 import pl.edu.uj.ii.smartdom.fragments.MeteorologicalStationFragment;
 import pl.edu.uj.ii.smartdom.fragments.SettingsFragment;
+import pl.edu.uj.ii.smartdom.server.entities.Authentication;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView;
 
     private int CURRENT_NAV_ITEM_ID = 0;
+
+    private Authentication authentication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,5 +136,20 @@ public class MainActivity extends AppCompatActivity
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public Authentication getAuthentication() {
+        SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, 0);
+        if (authentication == null)
+            authentication = new Authentication(prefs.getString(Constants.login, ""), prefs.getString(Constants.token, ""));
+
+        return authentication;
+    }
+
+    public void saveAuthentication(String login, String token) {
+        SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, 0);
+        prefs.edit().putString(Constants.login, login).putString(Constants.token, token).apply();
+
+        authentication = new Authentication(login, token);
     }
 }

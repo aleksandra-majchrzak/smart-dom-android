@@ -23,7 +23,7 @@ import pl.edu.uj.ii.smartdom.server.listeners.OpenDoorSubscriberListener;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DoorMotorFragment extends Fragment implements OpenDoorSubscriberListener, IsDoorOpenSubscriberListener {
+public class DoorMotorFragment extends MainSmartFragment implements OpenDoorSubscriberListener, IsDoorOpenSubscriberListener {
 
     public static final String TAG = MeteorologicalStationFragment.class.getName();
 
@@ -62,14 +62,14 @@ public class DoorMotorFragment extends Fragment implements OpenDoorSubscriberLis
     public void onResume() {
         super.onResume();
 
-        SmartDomService.getInstance().isDoorOpen(this);
+        SmartDomService.getInstance().isDoorOpen(this, getAuth());
     }
 
     @OnClick(R.id.open_door_button)
     public void onOpenDoorButtonClick() {
 
         progress.setVisibility(View.GONE);
-        SmartDomService.getInstance().openDoor(!isDoorOpen, this);
+        SmartDomService.getInstance().openDoor(!isDoorOpen, this, getAuth());
     }
 
     @Override
