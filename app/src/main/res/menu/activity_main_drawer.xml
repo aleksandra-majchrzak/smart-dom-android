@@ -32,13 +32,10 @@
             android:id="@+id/nav_motor"
             android:icon="@drawable/ic_lock"
             android:title="Door motor" />
+        <item
+            android:id="@+id/nav_rooms"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Rooms" />
     </group>
-    <item
-        android:id="@+id/nav_rooms"
-        android:title="Rooms">
-        <menu>
-
-        </menu>
-    </item>
 
 </menu>

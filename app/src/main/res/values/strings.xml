@@ -27,6 +27,7 @@
     <string name="door_motor">Door Motor</string>
     <string name="open_door">OPEN DOOR</string>
     <string name="close_door">CLOSE DOOR</string>
+    <string name="add_rooms_from_web_panel_n_or_swipe_to_refresh">Add rooms from web panel\n or swipe to refresh</string>
 
     <array name="entries_list_preference">
         <item>First preference entry</item>

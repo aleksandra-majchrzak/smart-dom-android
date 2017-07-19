@@ -12,6 +12,7 @@ import pl.edu.uj.ii.smartdom.server.listeners.GetCO2SubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetCOSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetGasSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetHumiditySubscriberListener;
+import pl.edu.uj.ii.smartdom.server.listeners.GetRoomsSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetTempSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.IsDoorOpenSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.LoginSubscriberListener;
@@ -21,6 +22,7 @@ import pl.edu.uj.ii.smartdom.server.subscribers.GetCO2Subscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetCOSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetGasSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetHumiditySubscriber;
+import pl.edu.uj.ii.smartdom.server.subscribers.GetRoomsSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetTempSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.IsDoorOpenSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.LoginSubscriber;
@@ -81,15 +83,22 @@ public class SmartDomService {
                 .subscribe(new LoginSubscriber(listener));
     }
 
+    public Subscription getRooms(GetRoomsSubscriberListener listener, Authentication authen) {
+        return api.getRooms(authen.getToken(), authen.getUsername())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new GetRoomsSubscriber(listener));
+    }
+
     public Subscription turnOnLight(OnErrorListener listener, Authentication authen) {
-        return api.turnOnLight(authen)
+        return api.turnOnLight(authen.getToken(), authen.getUsername())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new TurnOnLightSubscriber(listener));
     }
 
     public Subscription turnOffLight(OnErrorListener listener, Authentication authen) {
-        return api.turnOffLight(authen)
+        return api.turnOffLight(authen.getToken(), authen.getUsername())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new TurnOffLightSubscriber(listener));
@@ -101,49 +110,49 @@ public class SmartDomService {
         rgb.put("green", g);
         rgb.put("blue", b);
 
-        return api.setStripColor(authen, rgb)
+        return api.setStripColor(authen.getToken(), authen.getUsername(), rgb)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SetStripeColorSubscriber(listener));
     }
 
     public Subscription getTemperature(GetTempSubscriberListener listener, Authentication authen) {
-        return api.getMeteo(authen, "temperature")
+        return api.getMeteo(authen.getToken(), authen.getUsername(), "temperature")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new GetTempSubscriber(listener));
     }
 
     public Subscription getHumidity(GetHumiditySubscriberListener listener, Authentication authen) {
-        return api.getMeteo(authen, "humidity")
+        return api.getMeteo(authen.getToken(), authen.getUsername(), "humidity")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new GetHumiditySubscriber(listener));
     }
 
     public Subscription getCO(GetCOSubscriberListener listener, Authentication authen) {
-        return api.getMeteo(authen, "co")
+        return api.getMeteo(authen.getToken(), authen.getUsername(), "co")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new GetCOSubscriber(listener));
     }
 
     public Subscription getCO2(GetCO2SubscriberListener listener, Authentication authen) {
-        return api.getMeteo(authen, "co2")
+        return api.getMeteo(authen.getToken(), authen.getUsername(), "co2")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new GetCO2Subscriber(listener));
     }
 
     public Subscription getGas(GetGasSubscriberListener listener, Authentication authen) {
-        return api.getMeteo(authen, "gas")
+        return api.getMeteo(authen.getToken(), authen.getUsername(), "gas")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new GetGasSubscriber(listener));
     }
 
     public Subscription openDoor(boolean isOpen, OpenDoorSubscriberListener listener, Authentication authen) {
-        return api.openDoor(authen, new Door(isOpen))
+        return api.openDoor(authen.getToken(), authen.getUsername(), new Door(isOpen))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new OpenDoorSubscriber(listener));
@@ -151,7 +160,7 @@ public class SmartDomService {
     }
 
     public Subscription isDoorOpen(IsDoorOpenSubscriberListener listener, Authentication authen) {
-        return api.isDoorOpen(authen)
+        return api.isDoorOpen(authen.getToken(), authen.getUsername())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new IsDoorOpenSubscriber(listener));
