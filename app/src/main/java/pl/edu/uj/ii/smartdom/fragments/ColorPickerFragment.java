@@ -91,8 +91,8 @@ public class ColorPickerFragment extends MainSmartFragment implements OnErrorLis
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onStop() {
+        super.onStop();
 
         if (turnOnSubscrition != null)
             turnOnSubscrition.unsubscribe();

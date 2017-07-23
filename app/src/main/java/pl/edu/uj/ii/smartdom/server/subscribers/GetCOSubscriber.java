@@ -1,6 +1,6 @@
 package pl.edu.uj.ii.smartdom.server.subscribers;
 
-import pl.edu.uj.ii.smartdom.server.entities.Meteo;
+import pl.edu.uj.ii.smartdom.server.entities.MeteoResponse;
 import pl.edu.uj.ii.smartdom.server.listeners.GetCOSubscriberListener;
 import rx.Subscriber;
 
@@ -8,7 +8,7 @@ import rx.Subscriber;
  * Created by Mohru on 08.07.2017.
  */
 
-public class GetCOSubscriber extends Subscriber<Meteo> {
+public class GetCOSubscriber extends Subscriber<MeteoResponse> {
 
     private GetCOSubscriberListener listener;
 
@@ -27,7 +27,7 @@ public class GetCOSubscriber extends Subscriber<Meteo> {
     }
 
     @Override
-    public void onNext(Meteo meteo) {
+    public void onNext(MeteoResponse meteo) {
         listener.onCOReceived(meteo.co);
     }
 }

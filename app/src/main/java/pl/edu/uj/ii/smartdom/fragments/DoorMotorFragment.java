@@ -19,6 +19,7 @@ import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.server.SmartDomService;
 import pl.edu.uj.ii.smartdom.server.listeners.IsDoorOpenSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.OpenDoorSubscriberListener;
+import rx.Subscription;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +42,9 @@ public class DoorMotorFragment extends MainSmartFragment implements OpenDoorSubs
 
     private boolean isDoorOpen = true;
 
+    Subscription openDoorSubscription;
+    Subscription isDoorOpenSubscription;
+
     public DoorMotorFragment() {
         // Required empty public constructor
     }
@@ -62,14 +66,14 @@ public class DoorMotorFragment extends MainSmartFragment implements OpenDoorSubs
     public void onResume() {
         super.onResume();
 
-        SmartDomService.getInstance().isDoorOpen(this, getAuth());
+        isDoorOpenSubscription = SmartDomService.getInstance().isDoorOpen(this, getAuth());
     }
 
     @OnClick(R.id.open_door_button)
     public void onOpenDoorButtonClick() {
 
         progress.setVisibility(View.GONE);
-        SmartDomService.getInstance().openDoor(!isDoorOpen, this, getAuth());
+        openDoorSubscription = SmartDomService.getInstance().openDoor(!isDoorOpen, this, getAuth());
     }
 
     @Override
@@ -106,5 +110,16 @@ public class DoorMotorFragment extends MainSmartFragment implements OpenDoorSubs
 
         progress.setVisibility(View.GONE);
         this.isDoorOpen = isDoorOpen;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (openDoorSubscription != null)
+            openDoorSubscription.unsubscribe();
+
+        if (isDoorOpenSubscription != null)
+            isDoorOpenSubscription.unsubscribe();
     }
 }

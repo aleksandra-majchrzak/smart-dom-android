@@ -4,7 +4,7 @@ package pl.edu.uj.ii.smartdom.server.entities;
  * Created by Mohru on 08.07.2017.
  */
 
-public class Meteo {
+public class MeteoResponse {
 
     public double temperature;
     public double humidity;
@@ -12,10 +12,10 @@ public class Meteo {
     public double co2;
     public double gas;
 
-    public Meteo() {
+    public MeteoResponse() {
     }
 
-    public Meteo(double temperature, double humidity, double co, double co2, double gas) {
+    public MeteoResponse(double temperature, double humidity, double co, double co2, double gas) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.co = co;

@@ -7,7 +7,7 @@ import okhttp3.ResponseBody;
 import pl.edu.uj.ii.smartdom.server.entities.Door;
 import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
 import pl.edu.uj.ii.smartdom.server.entities.LoginResponse;
-import pl.edu.uj.ii.smartdom.server.entities.Meteo;
+import pl.edu.uj.ii.smartdom.server.entities.MeteoResponse;
 import pl.edu.uj.ii.smartdom.server.entities.RoomResponse;
 import pl.edu.uj.ii.smartdom.server.entities.User;
 import retrofit2.http.Body;
@@ -42,7 +42,7 @@ public interface SmartDomApi {
     public Observable<ResponseBody> setStripColor(@Header("Authorization") String authToken, @Query("login") String login, @QueryMap Map<String, Integer> rgb);
 
     @GET("api/meteo")
-    public Observable<Meteo> getMeteo(@Header("Authorization") String authToken, @Query("login") String login, @Query("param") String param);
+    public Observable<MeteoResponse> getMeteo(@Header("Authorization") String authToken, @Query("login") String login, @Query("param") String param);
 
     @POST("api/openDoor")
     public Observable<DoorResponse> openDoor(@Header("Authorization") String authToken, @Query("login") String login, @Body Door door);

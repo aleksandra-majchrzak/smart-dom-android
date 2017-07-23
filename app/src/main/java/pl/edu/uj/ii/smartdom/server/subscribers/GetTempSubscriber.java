@@ -1,6 +1,6 @@
 package pl.edu.uj.ii.smartdom.server.subscribers;
 
-import pl.edu.uj.ii.smartdom.server.entities.Meteo;
+import pl.edu.uj.ii.smartdom.server.entities.MeteoResponse;
 import pl.edu.uj.ii.smartdom.server.listeners.GetTempSubscriberListener;
 import rx.Subscriber;
 
@@ -8,7 +8,7 @@ import rx.Subscriber;
  * Created by Mohru on 08.07.2017.
  */
 
-public class GetTempSubscriber extends Subscriber<Meteo> {
+public class GetTempSubscriber extends Subscriber<MeteoResponse> {
 
     private GetTempSubscriberListener listener;
 
@@ -27,7 +27,7 @@ public class GetTempSubscriber extends Subscriber<Meteo> {
     }
 
     @Override
-    public void onNext(Meteo meteo) {
+    public void onNext(MeteoResponse meteo) {
         listener.onTemperatureReceived(meteo.temperature);
     }
 }

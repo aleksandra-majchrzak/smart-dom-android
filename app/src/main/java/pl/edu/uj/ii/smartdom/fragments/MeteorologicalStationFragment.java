@@ -19,6 +19,7 @@ import pl.edu.uj.ii.smartdom.server.listeners.GetCOSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetGasSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetHumiditySubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetTempSubscriberListener;
+import rx.Subscription;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +43,8 @@ public class MeteorologicalStationFragment extends MainSmartFragment implements 
 
     @BindView(R.id.gas_textView)
     TextView gasTextView;
+
+    Subscription tempSubscription, humiditySubscription, coSubscription, co2Subscription, gasSubscription;
 
 
     public MeteorologicalStationFragment() {
@@ -93,10 +96,26 @@ public class MeteorologicalStationFragment extends MainSmartFragment implements 
 
     @OnClick(R.id.refresh_meteo_button)
     public void onRefreshMeteoButtonClick() {
-        SmartDomService.getInstance().getCO(this, getAuth());
-        SmartDomService.getInstance().getCO2(this, getAuth());
-        SmartDomService.getInstance().getGas(this, getAuth());
-        SmartDomService.getInstance().getHumidity(this, getAuth());
-        SmartDomService.getInstance().getTemperature(this, getAuth());
+        coSubscription = SmartDomService.getInstance().getCO(this, getAuth());
+        co2Subscription = SmartDomService.getInstance().getCO2(this, getAuth());
+        gasSubscription = SmartDomService.getInstance().getGas(this, getAuth());
+        humiditySubscription = SmartDomService.getInstance().getHumidity(this, getAuth());
+        tempSubscription = SmartDomService.getInstance().getTemperature(this, getAuth());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (coSubscription != null)
+            coSubscription.unsubscribe();
+        if (co2Subscription != null)
+            co2Subscription.unsubscribe();
+        if (gasSubscription != null)
+            gasSubscription.unsubscribe();
+        if (humiditySubscription != null)
+            humiditySubscription.unsubscribe();
+        if (tempSubscription != null)
+            tempSubscription.unsubscribe();
     }
 }

@@ -11,7 +11,7 @@ import okio.BufferedSource;
 import pl.edu.uj.ii.smartdom.server.entities.Door;
 import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
 import pl.edu.uj.ii.smartdom.server.entities.LoginResponse;
-import pl.edu.uj.ii.smartdom.server.entities.Meteo;
+import pl.edu.uj.ii.smartdom.server.entities.MeteoResponse;
 import pl.edu.uj.ii.smartdom.server.entities.RoomResponse;
 import pl.edu.uj.ii.smartdom.server.entities.User;
 import retrofit2.http.Body;
@@ -54,9 +54,9 @@ public class MockSmartDomApi implements SmartDomApi {
     }
 
     @Override
-    public Observable<Meteo> getMeteo(@Header("Authorization") String authToken, @Query("login") String loginn, @Query("param") String param) {
+    public Observable<MeteoResponse> getMeteo(@Header("Authorization") String authToken, @Query("login") String loginn, @Query("param") String param) {
 
-        Meteo result = new Meteo();
+        MeteoResponse result = new MeteoResponse();
 
         switch (param) {
             case "temperature":

@@ -22,6 +22,7 @@ import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.database.Room;
 import pl.edu.uj.ii.smartdom.server.SmartDomService;
 import pl.edu.uj.ii.smartdom.server.listeners.GetRoomsSubscriberListener;
+import rx.Subscription;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +41,8 @@ public class RoomsFragment extends MainSmartFragment implements GetRoomsSubscrib
     SwipeRefreshLayout roomsRefreshLayout;
 
     ArrayAdapter<Room> roomsAdapter;
+
+    private Subscription subscription;
 
 
     public RoomsFragment() {
@@ -61,9 +64,9 @@ public class RoomsFragment extends MainSmartFragment implements GetRoomsSubscrib
     }
 
     private void initializeComponents(View fragmentView) {
-        List<Room> rooms = Room.listAll(Room.class);
+        List<Room> rooms = Room.listAll();
 
-        roomsAdapter = new ArrayAdapter<Room>(getContext(), R.layout.room_row, R.id.room_name_textView, rooms){
+        roomsAdapter = new ArrayAdapter<Room>(getContext(), R.layout.room_row, R.id.room_name_textView, rooms) {
             @NonNull
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -78,7 +81,7 @@ public class RoomsFragment extends MainSmartFragment implements GetRoomsSubscrib
         roomsRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                SmartDomService.getInstance().getRooms(RoomsFragment.this, getAuth());
+                subscription = SmartDomService.getInstance().getRooms(RoomsFragment.this, getAuth());
             }
         });
     }
@@ -108,5 +111,13 @@ public class RoomsFragment extends MainSmartFragment implements GetRoomsSubscrib
     public void onConnectionError() {
         Snackbar.make(getView(), "Could not connect do server", Snackbar.LENGTH_SHORT).show();
         roomsRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (subscription != null)
+            subscription.unsubscribe();
     }
 }
