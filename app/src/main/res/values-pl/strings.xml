@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">SmartDom</string>
+
+    <string name="navigation_drawer_open">Otwórz menu nawigacji</string>
+    <string name="navigation_drawer_close">Zamknij menu nawigacji</string>
+
+    <string name="action_settings">Ustawienia</string>
+
+    <string name="change_home">ZMIEŃ DOM</string>
+    <string name="add_new_home">DODAJ NOWY DOM</string>
+    <string name="login">Nazwa użytkownika</string>
+    <string name="password">Hasło</string>
+    <string name="login_caps">ZALOGUJ</string>
+
+    <string name="turn_on">WŁĄCZ</string>
+    <string name="turn_off">WYŁĄCZ</string>
+    <string name="led_stripe_color">Kolor paska LED</string>
+    <string name="temperature">Temperatura:</string>
+    <string name="meteorology">Meteorologia</string>
+    <string name="humidity">Wilgotność:</string>
+    <string name="gases">Gazy</string>
+    <string name="co">CO:</string>
+    <string name="gas">Metan:</string>
+    <string name="door_motor">Silnik drzwi</string>
+    <string name="open_door">OTWÓRZ DRZWI</string>
+    <string name="close_door">ZAMKNIJ DRZWI</string>
+    <string name="add_rooms_from_web_panel_n_or_swipe_to_refresh">Dodaj pokój w panelu webowym\n lub przeciągnij palcem by odświeżyć widok</string>
+
+    <array name="entries_list_preference">
+        <item>First preference entry</item>
+        <item>second preference entry</item>
+        <item>Third preference entry</item>
+    </array>
+
+    <array name="entryvalues_list_preference">
+        <item>First preference value</item>
+        <item>second preference value</item>
+        <item>Third preference value</item>
+    </array>
+</resources>
