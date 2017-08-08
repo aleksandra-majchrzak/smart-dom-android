@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.edu.uj.ii.smartdom.R;
+import pl.edu.uj.ii.smartdom.database.DoorMotorModule;
 import pl.edu.uj.ii.smartdom.server.SmartDomService;
 import pl.edu.uj.ii.smartdom.server.listeners.IsDoorOpenSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.OpenDoorSubscriberListener;
@@ -45,6 +46,8 @@ public class DoorMotorFragment extends MainSmartFragment implements OpenDoorSubs
     Subscription openDoorSubscription;
     Subscription isDoorOpenSubscription;
 
+    private DoorMotorModule doorModule = new DoorMotorModule("1234", "", "");
+
     public DoorMotorFragment() {
         // Required empty public constructor
     }
@@ -66,14 +69,14 @@ public class DoorMotorFragment extends MainSmartFragment implements OpenDoorSubs
     public void onResume() {
         super.onResume();
 
-        isDoorOpenSubscription = SmartDomService.getInstance().isDoorOpen(this, getAuth());
+        isDoorOpenSubscription = SmartDomService.getInstance().isDoorOpen(doorModule, this, getAuth());
     }
 
     @OnClick(R.id.open_door_button)
     public void onOpenDoorButtonClick() {
 
         progress.setVisibility(View.GONE);
-        openDoorSubscription = SmartDomService.getInstance().openDoor(!isDoorOpen, this, getAuth());
+        openDoorSubscription = SmartDomService.getInstance().openDoor(doorModule, this, getAuth());
     }
 
     @Override
@@ -89,6 +92,7 @@ public class DoorMotorFragment extends MainSmartFragment implements OpenDoorSubs
         }
 
         this.isDoorOpen = _isDoorOpen;
+        this.doorModule.setOpen(_isDoorOpen);
         progress.setVisibility(View.GONE);
     }
 
@@ -110,6 +114,7 @@ public class DoorMotorFragment extends MainSmartFragment implements OpenDoorSubs
 
         progress.setVisibility(View.GONE);
         this.isDoorOpen = isDoorOpen;
+        this.doorModule.setOpen(isDoorOpen);
     }
 
     @Override

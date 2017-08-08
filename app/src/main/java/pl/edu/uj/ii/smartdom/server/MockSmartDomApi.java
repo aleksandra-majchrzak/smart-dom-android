@@ -3,13 +3,13 @@ package pl.edu.uj.ii.smartdom.server;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import okio.BufferedSource;
 import pl.edu.uj.ii.smartdom.server.entities.Door;
 import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
+import pl.edu.uj.ii.smartdom.server.entities.Light;
 import pl.edu.uj.ii.smartdom.server.entities.LoginResponse;
 import pl.edu.uj.ii.smartdom.server.entities.MeteoResponse;
 import pl.edu.uj.ii.smartdom.server.entities.RoomResponse;
@@ -17,7 +17,6 @@ import pl.edu.uj.ii.smartdom.server.entities.User;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -39,22 +38,22 @@ public class MockSmartDomApi implements SmartDomApi {
     }
 
     @Override
-    public Observable<ResponseBody> turnOnLight(@Header("Authorization") String authToken, @Query("login") String login) {
+    public Observable<ResponseBody> turnOnLight(@Header("Authorization") String authToken, @Query("login") String login, @Body Light light) {
         return Observable.just(mockResponse);
     }
 
     @Override
-    public Observable<ResponseBody> turnOffLight(@Header("Authorization") String authToken, @Query("login") String login) {
+    public Observable<ResponseBody> turnOffLight(@Header("Authorization") String authToken, @Query("login") String login, @Body Light light) {
         return Observable.just(mockResponse);
     }
 
     @Override
-    public Observable<ResponseBody> setStripColor(@Header("Authorization") String authToken, @Query("login") String login, @QueryMap Map<String, Integer> rgb) {
+    public Observable<ResponseBody> setStripColor(@Header("Authorization") String authToken, @Query("login") String login, @Body Light light) {
         return Observable.just(mockResponse);
     }
 
     @Override
-    public Observable<MeteoResponse> getMeteo(@Header("Authorization") String authToken, @Query("login") String loginn, @Query("param") String param) {
+    public Observable<MeteoResponse> getMeteo(@Header("Authorization") String authToken, @Query("login") String loginn, @Query("param") String param, @Query("moduleServerId") String serverId) {
 
         MeteoResponse result = new MeteoResponse();
 
@@ -90,7 +89,7 @@ public class MockSmartDomApi implements SmartDomApi {
     }
 
     @Override
-    public Observable<DoorResponse> isDoorOpen(@Header("Authorization") String authToken, @Query("login") String login) {
+    public Observable<DoorResponse> isDoorOpen(@Header("Authorization") String authToken, @Query("login") String login, @Query("doorServerId") String serverId) {
         DoorResponse resp = new DoorResponse();
         resp.isOpen = isOpen;
         return Observable.just(resp);

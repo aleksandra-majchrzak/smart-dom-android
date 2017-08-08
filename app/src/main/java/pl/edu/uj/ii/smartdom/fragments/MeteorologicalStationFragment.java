@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.edu.uj.ii.smartdom.R;
+import pl.edu.uj.ii.smartdom.database.MeteoModule;
 import pl.edu.uj.ii.smartdom.server.SmartDomService;
 import pl.edu.uj.ii.smartdom.server.listeners.GetCO2SubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetCOSubscriberListener;
@@ -45,6 +46,8 @@ public class MeteorologicalStationFragment extends MainSmartFragment implements 
     TextView gasTextView;
 
     Subscription tempSubscription, humiditySubscription, coSubscription, co2Subscription, gasSubscription;
+
+    private MeteoModule meteoModule = new MeteoModule("1234", "", "");
 
 
     public MeteorologicalStationFragment() {
@@ -96,11 +99,11 @@ public class MeteorologicalStationFragment extends MainSmartFragment implements 
 
     @OnClick(R.id.refresh_meteo_button)
     public void onRefreshMeteoButtonClick() {
-        coSubscription = SmartDomService.getInstance().getCO(this, getAuth());
-        co2Subscription = SmartDomService.getInstance().getCO2(this, getAuth());
-        gasSubscription = SmartDomService.getInstance().getGas(this, getAuth());
-        humiditySubscription = SmartDomService.getInstance().getHumidity(this, getAuth());
-        tempSubscription = SmartDomService.getInstance().getTemperature(this, getAuth());
+        coSubscription = SmartDomService.getInstance().getCO(this, getAuth(), meteoModule);
+        co2Subscription = SmartDomService.getInstance().getCO2(this, getAuth(), meteoModule);
+        gasSubscription = SmartDomService.getInstance().getGas(this, getAuth(), meteoModule);
+        humiditySubscription = SmartDomService.getInstance().getHumidity(this, getAuth(), meteoModule);
+        tempSubscription = SmartDomService.getInstance().getTemperature(this, getAuth(), meteoModule);
     }
 
     @Override

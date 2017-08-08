@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.edu.uj.ii.smartdom.R;
+import pl.edu.uj.ii.smartdom.database.LightModule;
 import pl.edu.uj.ii.smartdom.server.SmartDomService;
 import pl.edu.uj.ii.smartdom.server.listeners.OnErrorListener;
 import rx.Subscription;
@@ -40,6 +41,8 @@ public class ColorPickerFragment extends MainSmartFragment implements OnErrorLis
     Subscription turnOnSubscrition;
     Subscription turnOffSubscrition;
     Subscription setStripeSubscrition;
+
+    private LightModule lightModule = new LightModule("1234", "", "");
 
     public ColorPickerFragment() {
         lastTime = System.currentTimeMillis();
@@ -68,7 +71,7 @@ public class ColorPickerFragment extends MainSmartFragment implements OnErrorLis
 
                 if (System.currentTimeMillis() - lastTime > TIME_INTERVAL) {
                     Log.d("setStripeColor", "red: " + rgb[0] + " green: " + rgb[1] + " blue: " + rgb[2]);
-                    setStripeSubscrition = SmartDomService.getInstance().setStripColor(rgb[0], rgb[1], rgb[2], ColorPickerFragment.this, getAuth());
+                    setStripeSubscrition = SmartDomService.getInstance().setStripColor(rgb[0], rgb[1], rgb[2], ColorPickerFragment.this, getAuth(), lightModule);
                     lastTime = System.currentTimeMillis();
                 }
             }
@@ -77,12 +80,12 @@ public class ColorPickerFragment extends MainSmartFragment implements OnErrorLis
 
     @OnClick(R.id.turn_on_button)
     public void onTurnOnButtonClick() {
-        turnOnSubscrition = SmartDomService.getInstance().turnOnLight(this, getAuth());
+        turnOnSubscrition = SmartDomService.getInstance().turnOnLight(this, getAuth(), lightModule);
     }
 
     @OnClick(R.id.turn_off_button)
     public void onTurnOffButtonClick() {
-        turnOffSubscrition = SmartDomService.getInstance().turnOffLight(this, getAuth());
+        turnOffSubscrition = SmartDomService.getInstance().turnOffLight(this, getAuth(), lightModule);
     }
 
     @Override

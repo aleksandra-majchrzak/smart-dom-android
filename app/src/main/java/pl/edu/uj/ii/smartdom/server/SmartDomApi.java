@@ -1,11 +1,11 @@
 package pl.edu.uj.ii.smartdom.server;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import okhttp3.ResponseBody;
 import pl.edu.uj.ii.smartdom.server.entities.Door;
 import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
+import pl.edu.uj.ii.smartdom.server.entities.Light;
 import pl.edu.uj.ii.smartdom.server.entities.LoginResponse;
 import pl.edu.uj.ii.smartdom.server.entities.MeteoResponse;
 import pl.edu.uj.ii.smartdom.server.entities.RoomResponse;
@@ -15,7 +15,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -33,21 +32,21 @@ public interface SmartDomApi {
     //todo w tych metodach powinnam tez miec odniesienie do konkretnego kontrolera- jakis id kontrolera czy cos
 
     @POST("api/turnOnLight")
-    public Observable<ResponseBody> turnOnLight(@Header("Authorization") String authToken, @Query("login") String login);
+    public Observable<ResponseBody> turnOnLight(@Header("Authorization") String authToken, @Query("login") String login, @Body Light light);
 
     @POST("api/turnOffLight")
-    public Observable<ResponseBody> turnOffLight(@Header("Authorization") String authToken, @Query("login") String login);
+    public Observable<ResponseBody> turnOffLight(@Header("Authorization") String authToken, @Query("login") String login, @Body Light light);
 
     @POST("api/setStripColor")
-    public Observable<ResponseBody> setStripColor(@Header("Authorization") String authToken, @Query("login") String login, @QueryMap Map<String, Integer> rgb);
+    public Observable<ResponseBody> setStripColor(@Header("Authorization") String authToken, @Query("login") String login, @Body Light light);
 
     @GET("api/meteo")
-    public Observable<MeteoResponse> getMeteo(@Header("Authorization") String authToken, @Query("login") String login, @Query("param") String param);
+    public Observable<MeteoResponse> getMeteo(@Header("Authorization") String authToken, @Query("login") String login, @Query("param") String param, @Query("moduleServerId") String serverId);
 
     @POST("api/openDoor")
     public Observable<DoorResponse> openDoor(@Header("Authorization") String authToken, @Query("login") String login, @Body Door door);
 
     @GET("api/openDoor")
-    public Observable<DoorResponse> isDoorOpen(@Header("Authorization") String authToken, @Query("login") String login);
+    public Observable<DoorResponse> isDoorOpen(@Header("Authorization") String authToken, @Query("login") String login, @Query("doorServerId") String serverId);
 
 }

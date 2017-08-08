@@ -5,8 +5,12 @@ import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import pl.edu.uj.ii.smartdom.database.DoorMotorModule;
+import pl.edu.uj.ii.smartdom.database.LightModule;
+import pl.edu.uj.ii.smartdom.database.MeteoModule;
 import pl.edu.uj.ii.smartdom.server.entities.Authentication;
 import pl.edu.uj.ii.smartdom.server.entities.Door;
+import pl.edu.uj.ii.smartdom.server.entities.Light;
 import pl.edu.uj.ii.smartdom.server.entities.User;
 import pl.edu.uj.ii.smartdom.server.listeners.GetCO2SubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetCOSubscriberListener;
@@ -47,7 +51,7 @@ public class SmartDomService {
     private static SmartDomApi api;
 
     //private static final String BASE_URL = "http://192.168.100.106//";
-    private static final String BASE_URL = "http://192.168.100.104:4567/";
+    private static final String BASE_URL = "http://192.168.0.129:4567/";
 
     private SmartDomService() {
         if (api == null) {
@@ -90,77 +94,77 @@ public class SmartDomService {
                 .subscribe(new GetRoomsSubscriber(listener));
     }
 
-    public Subscription turnOnLight(OnErrorListener listener, Authentication authen) {
-        return api.turnOnLight(authen.getToken(), authen.getUsername())
+    public Subscription turnOnLight(OnErrorListener listener, Authentication authen, LightModule lightModule) {
+        return api.turnOnLight(authen.getToken(), authen.getUsername(), new Light(lightModule.getServerId(), null))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new TurnOnLightSubscriber(listener));
     }
 
-    public Subscription turnOffLight(OnErrorListener listener, Authentication authen) {
-        return api.turnOffLight(authen.getToken(), authen.getUsername())
+    public Subscription turnOffLight(OnErrorListener listener, Authentication authen, LightModule lightModule) {
+        return api.turnOffLight(authen.getToken(), authen.getUsername(), new Light(lightModule.getServerId(), null))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new TurnOffLightSubscriber(listener));
     }
 
-    public Subscription setStripColor(int r, int g, int b, OnErrorListener listener, Authentication authen) {
+    public Subscription setStripColor(int r, int g, int b, OnErrorListener listener, Authentication authen, LightModule lightModule) {
         Map<String, Integer> rgb = new HashMap<>();
         rgb.put("red", r);
         rgb.put("green", g);
         rgb.put("blue", b);
 
-        return api.setStripColor(authen.getToken(), authen.getUsername(), rgb)
+        return api.setStripColor(authen.getToken(), authen.getUsername(), new Light(lightModule.getServerId(), rgb))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SetStripeColorSubscriber(listener));
     }
 
-    public Subscription getTemperature(GetTempSubscriberListener listener, Authentication authen) {
-        return api.getMeteo(authen.getToken(), authen.getUsername(), "temperature")
+    public Subscription getTemperature(GetTempSubscriberListener listener, Authentication authen, MeteoModule module) {
+        return api.getMeteo(authen.getToken(), authen.getUsername(), "temperature", module.getServerId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new GetTempSubscriber(listener));
     }
 
-    public Subscription getHumidity(GetHumiditySubscriberListener listener, Authentication authen) {
-        return api.getMeteo(authen.getToken(), authen.getUsername(), "humidity")
+    public Subscription getHumidity(GetHumiditySubscriberListener listener, Authentication authen, MeteoModule module) {
+        return api.getMeteo(authen.getToken(), authen.getUsername(), "humidity", module.getServerId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new GetHumiditySubscriber(listener));
     }
 
-    public Subscription getCO(GetCOSubscriberListener listener, Authentication authen) {
-        return api.getMeteo(authen.getToken(), authen.getUsername(), "co")
+    public Subscription getCO(GetCOSubscriberListener listener, Authentication authen, MeteoModule module) {
+        return api.getMeteo(authen.getToken(), authen.getUsername(), "co", module.getServerId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new GetCOSubscriber(listener));
     }
 
-    public Subscription getCO2(GetCO2SubscriberListener listener, Authentication authen) {
-        return api.getMeteo(authen.getToken(), authen.getUsername(), "co2")
+    public Subscription getCO2(GetCO2SubscriberListener listener, Authentication authen, MeteoModule module) {
+        return api.getMeteo(authen.getToken(), authen.getUsername(), "co2", module.getServerId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new GetCO2Subscriber(listener));
     }
 
-    public Subscription getGas(GetGasSubscriberListener listener, Authentication authen) {
-        return api.getMeteo(authen.getToken(), authen.getUsername(), "gas")
+    public Subscription getGas(GetGasSubscriberListener listener, Authentication authen, MeteoModule module) {
+        return api.getMeteo(authen.getToken(), authen.getUsername(), "gas", module.getServerId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new GetGasSubscriber(listener));
     }
 
-    public Subscription openDoor(boolean isOpen, OpenDoorSubscriberListener listener, Authentication authen) {
-        return api.openDoor(authen.getToken(), authen.getUsername(), new Door(isOpen))
+    public Subscription openDoor(DoorMotorModule door, OpenDoorSubscriberListener listener, Authentication authen) {
+        return api.openDoor(authen.getToken(), authen.getUsername(), new Door(door.getServerId(), !door.isOpen()))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new OpenDoorSubscriber(listener));
 
     }
 
-    public Subscription isDoorOpen(IsDoorOpenSubscriberListener listener, Authentication authen) {
-        return api.isDoorOpen(authen.getToken(), authen.getUsername())
+    public Subscription isDoorOpen(DoorMotorModule door, IsDoorOpenSubscriberListener listener, Authentication authen) {
+        return api.isDoorOpen(authen.getToken(), authen.getUsername(), door.getServerId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new IsDoorOpenSubscriber(listener));
