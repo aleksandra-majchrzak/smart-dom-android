@@ -34,6 +34,7 @@ import pl.edu.uj.ii.smartdom.server.subscribers.OpenDoorSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.SetStripeColorSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.TurnOffLightSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.TurnOnLightSubscriber;
+import pl.edu.uj.ii.smartdom.utils.SSLUtils;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -51,13 +52,19 @@ public class SmartDomService {
     private static SmartDomApi api;
 
     //private static final String BASE_URL = "http://192.168.100.106//";
-    private static final String BASE_URL = "http://192.168.0.129:4567/";
+    private static final String BASE_URL = "https://192.168.0.129:4567/";
 
     private SmartDomService() {
         if (api == null) {
+
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+            if (SSLUtils.getSslContext() != null && SSLUtils.getTrustManager() != null)
+                builder.sslSocketFactory(SSLUtils.getSslContext().getSocketFactory(), SSLUtils.getTrustManager());
+
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+            OkHttpClient client = builder.addInterceptor(interceptor).build();
 
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
