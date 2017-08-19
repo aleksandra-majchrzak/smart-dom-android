@@ -1,22 +1,18 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="First section">
-
-        <CheckBoxPreference
-            android:defaultValue="default checkbox preference"
-            android:key="checkbox_preference"
-            android:title="title checkbox preference" />
-
+    <PreferenceCategory android:title="Podstawowe ustawienia">
         <EditTextPreference
-            android:dependency="checkbox_preference"
-            android:dialogTitle="dialog title edittext preference"
-            android:key="edittext_preference"
-            android:summary="summary edittext preference"
-            android:title="title edittext preference" />
+            android:dialogTitle="Wpisz adres serwera:"
+            android:key="web_server_preference"
+            android:summary="___.___.___.___"
+            android:inputType="numberDecimal"
+            android:title="Adres serwera" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="title second section">
+    <PreferenceCategory
+        android:key="second_section_preference"
+        android:title="title second section">
 
         <ListPreference
             android:dialogTitle="dialog title list preference"

@@ -19,7 +19,9 @@
             android:title="Log out" />
     </group>
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/private_menu"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_family"
             android:icon="@drawable/ic_family"

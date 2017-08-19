@@ -1,5 +1,6 @@
 package pl.edu.uj.ii.smartdom.activities;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -8,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,7 +61,30 @@ public class MainActivity extends AppCompatActivity
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+
+        drawer.addDrawerListener(toggle);
+        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                if (TextUtils.isEmpty(getAuthentication().getToken())) {
+                    navigationView.getMenu().setGroupVisible(R.id.private_menu, false);
+                } else {
+                    navigationView.getMenu().setGroupVisible(R.id.private_menu, true);
+                }
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+        });
         toggle.syncState();
 
         navigationView.getHeaderView(0)
@@ -94,6 +119,7 @@ public class MainActivity extends AppCompatActivity
         return false;
     }
 
+    @SuppressLint("CommitPrefEdits")
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -107,7 +133,19 @@ public class MainActivity extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.nav_logout) {
+            SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, 0);
+            prefs.edit()
+                    .remove(Constants.login)
+                    .remove(Constants.token)
+                    .commit();
+            authentication = new Authentication("", "");
+            navigationView.getMenu().setGroupVisible(R.id.private_menu, false);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new MainFragment(), MainFragment.TAG)
+                    .commit();
 
+            drawer.closeDrawer(GravityCompat.START);
+            return false;
         } else if (id == R.id.nav_settings) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new SettingsFragment(), SettingsFragment.TAG)
