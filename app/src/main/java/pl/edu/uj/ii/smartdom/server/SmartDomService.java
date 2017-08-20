@@ -1,5 +1,7 @@
 package pl.edu.uj.ii.smartdom.server;
 
+import android.text.TextUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +37,7 @@ import pl.edu.uj.ii.smartdom.server.subscribers.SetStripeColorSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.TurnOffLightSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.TurnOnLightSubscriber;
 import pl.edu.uj.ii.smartdom.utils.SSLUtils;
+import pl.edu.uj.ii.smartdom.utils.StringPatterns;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -52,11 +55,17 @@ public class SmartDomService {
     private static SmartDomApi api;
 
     //private static final String BASE_URL = "http://192.168.100.106//";
-    private static final String BASE_URL = "https://192.168.0.129:4567/";
+    //private static String BASE_URL = "https://192.168.0.129:4567/";
+    private static String BASE_URL = "";
 
     private SmartDomService() {
-        if (api == null) {
+    }
 
+    public static SmartDomService getInstance() {
+        if (service == null) {
+            service = new SmartDomService();
+        }
+        if (api == null && !TextUtils.isEmpty(BASE_URL)) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
             if (SSLUtils.getSslContext() != null && SSLUtils.getTrustManager() != null)
@@ -76,104 +85,172 @@ public class SmartDomService {
             api = retrofit.create(SmartDomApi.class);
             //api = new MockSmartDomApi();
         }
-    }
-
-    public static SmartDomService getInstance() {
-        if (service == null) {
-            service = new SmartDomService();
-        }
         return service;
     }
 
-    public Subscription login(String login, String password, LoginSubscriberListener listener) {
-        User user = new User(login, password);
+    public static void setServerAddress(String serverAddress) {
+        if (StringPatterns.IP_ADDRESS_WITH_PORT.matcher(serverAddress).matches())
+            BASE_URL = "https://" + serverAddress + "/";
+        else
+            BASE_URL = "";
+    }
 
-        return api.login(user)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new LoginSubscriber(listener));
+    public static void resetService() {
+        api = null;
+        service = null;
+    }
+
+    public Subscription login(String login, String password, LoginSubscriberListener listener) {
+        if (hasBaseURL()) {
+            User user = new User(login, password);
+            return api.login(user)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new LoginSubscriber(listener));
+        } else {
+            listener.onServerNotSet();
+            return null;
+        }
     }
 
     public Subscription getRooms(GetRoomsSubscriberListener listener, Authentication authen) {
-        return api.getRooms(authen.getToken(), authen.getUsername())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new GetRoomsSubscriber(listener));
+        if (hasBaseURL()) {
+            return api.getRooms(authen.getToken(), authen.getUsername())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new GetRoomsSubscriber(listener));
+        } else {
+            listener.onServerNotSet();
+            return null;
+        }
     }
 
     public Subscription turnOnLight(OnErrorListener listener, Authentication authen, LightModule lightModule) {
-        return api.turnOnLight(authen.getToken(), authen.getUsername(), new Light(lightModule.getServerId(), null))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new TurnOnLightSubscriber(listener));
+        if (hasBaseURL()) {
+            return api.turnOnLight(authen.getToken(), authen.getUsername(), new Light(lightModule.getServerId(), null))
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new TurnOnLightSubscriber(listener));
+        } else {
+            listener.onServerNotSet();
+            return null;
+        }
     }
 
     public Subscription turnOffLight(OnErrorListener listener, Authentication authen, LightModule lightModule) {
-        return api.turnOffLight(authen.getToken(), authen.getUsername(), new Light(lightModule.getServerId(), null))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new TurnOffLightSubscriber(listener));
+        if (hasBaseURL()) {
+            return api.turnOffLight(authen.getToken(), authen.getUsername(), new Light(lightModule.getServerId(), null))
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new TurnOffLightSubscriber(listener));
+        } else {
+            listener.onServerNotSet();
+            return null;
+        }
     }
 
     public Subscription setStripColor(int r, int g, int b, OnErrorListener listener, Authentication authen, LightModule lightModule) {
-        Map<String, Integer> rgb = new HashMap<>();
-        rgb.put("red", r);
-        rgb.put("green", g);
-        rgb.put("blue", b);
+        if (hasBaseURL()) {
+            Map<String, Integer> rgb = new HashMap<>();
+            rgb.put("red", r);
+            rgb.put("green", g);
+            rgb.put("blue", b);
 
-        return api.setStripColor(authen.getToken(), authen.getUsername(), new Light(lightModule.getServerId(), rgb))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SetStripeColorSubscriber(listener));
+            return api.setStripColor(authen.getToken(), authen.getUsername(), new Light(lightModule.getServerId(), rgb))
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SetStripeColorSubscriber(listener));
+        } else {
+            listener.onServerNotSet();
+            return null;
+        }
     }
 
     public Subscription getTemperature(GetTempSubscriberListener listener, Authentication authen, MeteoModule module) {
-        return api.getMeteo(authen.getToken(), authen.getUsername(), "temperature", module.getServerId())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new GetTempSubscriber(listener));
+        if (hasBaseURL()) {
+            return api.getMeteo(authen.getToken(), authen.getUsername(), "temperature", module.getServerId())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new GetTempSubscriber(listener));
+        } else {
+            listener.onServerNotSet();
+            return null;
+        }
     }
 
     public Subscription getHumidity(GetHumiditySubscriberListener listener, Authentication authen, MeteoModule module) {
-        return api.getMeteo(authen.getToken(), authen.getUsername(), "humidity", module.getServerId())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new GetHumiditySubscriber(listener));
+        if (hasBaseURL()) {
+            return api.getMeteo(authen.getToken(), authen.getUsername(), "humidity", module.getServerId())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new GetHumiditySubscriber(listener));
+        } else {
+            listener.onServerNotSet();
+            return null;
+        }
     }
 
     public Subscription getCO(GetCOSubscriberListener listener, Authentication authen, MeteoModule module) {
-        return api.getMeteo(authen.getToken(), authen.getUsername(), "co", module.getServerId())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new GetCOSubscriber(listener));
+        if (hasBaseURL()) {
+            return api.getMeteo(authen.getToken(), authen.getUsername(), "co", module.getServerId())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new GetCOSubscriber(listener));
+        } else {
+            listener.onServerNotSet();
+            return null;
+        }
     }
 
     public Subscription getCO2(GetCO2SubscriberListener listener, Authentication authen, MeteoModule module) {
-        return api.getMeteo(authen.getToken(), authen.getUsername(), "co2", module.getServerId())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new GetCO2Subscriber(listener));
+        if (hasBaseURL()) {
+            return api.getMeteo(authen.getToken(), authen.getUsername(), "co2", module.getServerId())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new GetCO2Subscriber(listener));
+        } else {
+            listener.onServerNotSet();
+            return null;
+        }
     }
 
     public Subscription getGas(GetGasSubscriberListener listener, Authentication authen, MeteoModule module) {
-        return api.getMeteo(authen.getToken(), authen.getUsername(), "gas", module.getServerId())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new GetGasSubscriber(listener));
+        if (hasBaseURL()) {
+            return api.getMeteo(authen.getToken(), authen.getUsername(), "gas", module.getServerId())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new GetGasSubscriber(listener));
+        } else {
+            listener.onServerNotSet();
+            return null;
+        }
     }
 
     public Subscription openDoor(DoorMotorModule door, OpenDoorSubscriberListener listener, Authentication authen) {
-        return api.openDoor(authen.getToken(), authen.getUsername(), new Door(door.getServerId(), !door.isOpen()))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new OpenDoorSubscriber(listener));
-
+        if (hasBaseURL()) {
+            return api.openDoor(authen.getToken(), authen.getUsername(), new Door(door.getServerId(), !door.isOpen()))
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new OpenDoorSubscriber(listener));
+        } else {
+            listener.onServerNotSet();
+            return null;
+        }
     }
 
     public Subscription isDoorOpen(DoorMotorModule door, IsDoorOpenSubscriberListener listener, Authentication authen) {
-        return api.isDoorOpen(authen.getToken(), authen.getUsername(), door.getServerId())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new IsDoorOpenSubscriber(listener));
+        if (hasBaseURL()) {
+            return api.isDoorOpen(authen.getToken(), authen.getUsername(), door.getServerId())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new IsDoorOpenSubscriber(listener));
+        } else {
+            listener.onServerNotSet();
+            return null;
+        }
+    }
+
+    private boolean hasBaseURL() {
+        return !TextUtils.isEmpty(BASE_URL);
     }
 }

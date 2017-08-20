@@ -11,10 +11,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.activities.MainActivity;
+import pl.edu.uj.ii.smartdom.server.SmartDomService;
 import pl.edu.uj.ii.smartdom.server.entities.Authentication;
+import pl.edu.uj.ii.smartdom.utils.StringPatterns;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,21 +47,30 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         view.setBackgroundResource(R.color.background);
 
         final EditTextPreference serverPref = ((EditTextPreference) getPreferenceManager().findPreference("web_server_preference"));
+        serverPref.setSummary(serverPref.getText());
         serverPref.setDialogLayoutResource(R.layout.preference_dialog_edittext);
         serverPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                serverPref.setSummary((String) newValue);
+                String newAddress = (String) newValue;
+                if (!StringPatterns.IP_ADDRESS_WITH_PORT.matcher(newAddress).matches()) {
+                    Toast.makeText(getContext(), R.string.wrong_ip_format, Toast.LENGTH_LONG).show();
+                    return false;
+                }
+
+                serverPref.setSummary(newAddress);
+                SmartDomService.resetService();
+                SmartDomService.setServerAddress(newAddress);
                 return true;
             }
         });
 
         Authentication auth = ((MainActivity) getActivity()).getAuthentication();
         if (TextUtils.isEmpty(auth.getToken())) {
-            getPreferenceManager().findPreference("second_section_preference").setVisible(false);
+            getPreferenceManager().getPreferenceScreen().removePreference(getPreferenceManager().findPreference("second_section_preference"));
             serverPref.setEnabled(true);
         } else {
-            getPreferenceManager().findPreference("second_section_preference").setVisible(true);
+            getPreferenceManager().getPreferenceScreen().addPreference(getPreferenceManager().findPreference("second_section_preference"));
             serverPref.setEnabled(false);
         }
 
@@ -79,5 +91,4 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }*/
-
 }

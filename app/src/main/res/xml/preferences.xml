@@ -3,9 +3,9 @@
     <PreferenceCategory android:title="Podstawowe ustawienia">
         <EditTextPreference
             android:dialogTitle="Wpisz adres serwera:"
+            android:inputType="numberDecimal"
             android:key="web_server_preference"
             android:summary="___.___.___.___"
-            android:inputType="numberDecimal"
             android:title="Adres serwera" />
 
     </PreferenceCategory>
@@ -15,13 +15,16 @@
         android:title="title second section">
 
         <ListPreference
+            android:dependency="second_section_preference"
             android:dialogTitle="dialog title list preference"
             android:entries="@array/entries_list_preference"
             android:entryValues="@array/entryvalues_list_preference"
             android:key="list_preference"
             android:title="title list preference" />
 
-        <Preference android:title="title intent preference">
+        <Preference
+            android:dependency="second_section_preference"
+            android:title="title intent preference">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="http://codepath.com/" />
