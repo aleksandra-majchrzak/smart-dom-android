@@ -53,6 +53,11 @@ public class MockSmartDomApi implements SmartDomApi {
     }
 
     @Override
+    public Observable<ResponseBody> setStripBrightness(@Header("Authorization") String authToken, @Query("login") String login, @Body Light light) {
+        return Observable.just(mockResponse);
+    }
+
+    @Override
     public Observable<MeteoResponse> getMeteo(@Header("Authorization") String authToken, @Query("login") String loginn, @Query("param") String param, @Query("moduleServerId") String serverId) {
 
         MeteoResponse result = new MeteoResponse();

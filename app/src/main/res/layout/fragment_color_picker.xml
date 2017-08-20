@@ -7,7 +7,7 @@
     tools:context="pl.edu.uj.ii.smartdom.fragments.ColorPickerFragment">
 
 
-    <com.skydoves.colorpickerview.ColorPickerView
+    <pl.edu.uj.ii.smartdom.views.MyColorPickerView
         android:id="@+id/colorPickerView"
         android:layout_width="300dp"
         android:layout_height="300dp"
@@ -45,6 +45,19 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/colorPickerView"
         android:layout_marginBottom="25dp"
+        android:enabled="false"
         android:text="@string/turn_off" />
+
+    <SeekBar
+        android:id="@+id/brightness_seekBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/colorPickerView"
+        android:layout_alignRight="@+id/colorPickerView"
+        android:layout_below="@+id/colorPickerView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:enabled="false"
+        android:progress="100" />
 
 </RelativeLayout>

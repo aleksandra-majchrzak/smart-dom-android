@@ -6,4 +6,5 @@
     <color name="background">#f5f5f5</color>
     <color name="textColor">#424242</color>
     <color name="white">@android:color/white</color>
+    <color name="disabled">#e0e0e0</color>
 </resources>

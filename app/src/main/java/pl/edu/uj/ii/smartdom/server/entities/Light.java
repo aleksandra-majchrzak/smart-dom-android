@@ -8,9 +8,15 @@ import java.util.Map;
 
 public class Light extends Module {
     private Map<String, Integer> rgb;
+    private int brightness;
 
     public Light(String serverId, Map<String, Integer> rgb) {
         super(serverId);
         this.rgb = rgb;
+    }
+
+    public Light(String serverId, int brightness) {
+        super(serverId);
+        this.brightness = brightness;
     }
 }

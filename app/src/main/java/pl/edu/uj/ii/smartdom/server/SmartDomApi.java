@@ -40,6 +40,9 @@ public interface SmartDomApi {
     @POST("api/setStripColor")
     public Observable<ResponseBody> setStripColor(@Header("Authorization") String authToken, @Query("login") String login, @Body Light light);
 
+    @POST("api/setStripBrightness")
+    public Observable<ResponseBody> setStripBrightness(@Header("Authorization") String authToken, @Query("login") String login, @Body Light light);
+
     @GET("api/meteo")
     public Observable<MeteoResponse> getMeteo(@Header("Authorization") String authToken, @Query("login") String login, @Query("param") String param, @Query("moduleServerId") String serverId);
 

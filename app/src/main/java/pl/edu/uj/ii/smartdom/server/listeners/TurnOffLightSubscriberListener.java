@@ -5,4 +5,5 @@ package pl.edu.uj.ii.smartdom.server.listeners;
  */
 
 public interface TurnOffLightSubscriberListener extends OnErrorListener {
+    void onLightOff();
 }

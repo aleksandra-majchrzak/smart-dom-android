@@ -24,6 +24,8 @@ import pl.edu.uj.ii.smartdom.server.listeners.IsDoorOpenSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.LoginSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.OnErrorListener;
 import pl.edu.uj.ii.smartdom.server.listeners.OpenDoorSubscriberListener;
+import pl.edu.uj.ii.smartdom.server.listeners.TurnOffLightSubscriberListener;
+import pl.edu.uj.ii.smartdom.server.listeners.TurnOnSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetCO2Subscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetCOSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetGasSubscriber;
@@ -33,6 +35,7 @@ import pl.edu.uj.ii.smartdom.server.subscribers.GetTempSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.IsDoorOpenSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.LoginSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.OpenDoorSubscriber;
+import pl.edu.uj.ii.smartdom.server.subscribers.SetStripBrightnessSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.SetStripeColorSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.TurnOffLightSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.TurnOnLightSubscriber;
@@ -125,7 +128,7 @@ public class SmartDomService {
         }
     }
 
-    public Subscription turnOnLight(OnErrorListener listener, Authentication authen, LightModule lightModule) {
+    public Subscription turnOnLight(TurnOnSubscriberListener listener, Authentication authen, LightModule lightModule) {
         if (hasBaseURL()) {
             return api.turnOnLight(authen.getToken(), authen.getUsername(), new Light(lightModule.getServerId(), null))
                     .subscribeOn(Schedulers.newThread())
@@ -137,7 +140,7 @@ public class SmartDomService {
         }
     }
 
-    public Subscription turnOffLight(OnErrorListener listener, Authentication authen, LightModule lightModule) {
+    public Subscription turnOffLight(TurnOffLightSubscriberListener listener, Authentication authen, LightModule lightModule) {
         if (hasBaseURL()) {
             return api.turnOffLight(authen.getToken(), authen.getUsername(), new Light(lightModule.getServerId(), null))
                     .subscribeOn(Schedulers.newThread())
@@ -160,6 +163,18 @@ public class SmartDomService {
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new SetStripeColorSubscriber(listener));
+        } else {
+            listener.onServerNotSet();
+            return null;
+        }
+    }
+
+    public Subscription setStripBrightness(int brightness, OnErrorListener listener, Authentication authen, LightModule lightModule) {
+        if (hasBaseURL()) {
+            return api.setStripBrightness(authen.getToken(), authen.getUsername(), new Light(lightModule.getServerId(), brightness))
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SetStripBrightnessSubscriber(listener));
         } else {
             listener.onServerNotSet();
             return null;

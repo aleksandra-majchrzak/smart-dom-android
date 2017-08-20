@@ -3,7 +3,7 @@ package pl.edu.uj.ii.smartdom.server.subscribers;
 import android.util.Log;
 
 import okhttp3.ResponseBody;
-import pl.edu.uj.ii.smartdom.server.listeners.OnErrorListener;
+import pl.edu.uj.ii.smartdom.server.listeners.TurnOffLightSubscriberListener;
 import rx.Subscriber;
 
 /**
@@ -12,9 +12,9 @@ import rx.Subscriber;
 
 public class TurnOffLightSubscriber extends Subscriber<ResponseBody> {
 
-    private OnErrorListener listener;
+    private TurnOffLightSubscriberListener listener;
 
-    public TurnOffLightSubscriber(OnErrorListener listener) {
+    public TurnOffLightSubscriber(TurnOffLightSubscriberListener listener) {
         this.listener = listener;
     }
 
@@ -32,5 +32,6 @@ public class TurnOffLightSubscriber extends Subscriber<ResponseBody> {
     @Override
     public void onNext(ResponseBody responseBody) {
         Log.d("TurnOffLightSub", "onNext ");
+        listener.onLightOff();
     }
 }
