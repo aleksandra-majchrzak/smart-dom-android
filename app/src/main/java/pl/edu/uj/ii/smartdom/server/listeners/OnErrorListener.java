@@ -6,4 +6,5 @@ package pl.edu.uj.ii.smartdom.server.listeners;
 
 public interface OnErrorListener {
     void onConnectionError();
+    void onServerNotSet();
 }

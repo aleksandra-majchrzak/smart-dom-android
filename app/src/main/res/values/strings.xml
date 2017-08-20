@@ -25,6 +25,11 @@
     <string name="open_door">OPEN DOOR</string>
     <string name="close_door">CLOSE DOOR</string>
     <string name="add_rooms_from_web_panel_n_or_swipe_to_refresh">Add rooms from web panel\n or swipe to refresh</string>
+    <string name="server_address_error">Problem with server address. Check in settings.</string>
+    <string name="could_not_connect_with_server">Could not connect with server. Check internet connection.</string>
+    <string name="login_error">Login error. Wrong login or password.</string>
+    <string name="module_connection_error">Could not connect with module.</string>
+    <string name="wrong_ip_format">Wrong IP format. Did not save.</string>
 
     <array name="entries_list_preference">
         <item>First preference entry</item>

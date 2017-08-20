@@ -109,7 +109,7 @@ public class RoomsFragment extends MainSmartFragment implements GetRoomsSubscrib
 
     @Override
     public void onConnectionError() {
-        Snackbar.make(getView(), "Could not connect do server", Snackbar.LENGTH_SHORT).show();
+        super.onConnectionError();
         roomsRefreshLayout.setRefreshing(false);
     }
 

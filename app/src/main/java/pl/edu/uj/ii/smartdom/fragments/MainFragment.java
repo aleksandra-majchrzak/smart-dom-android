@@ -46,7 +46,7 @@ public class MainFragment extends MainSmartFragment implements LoginSubscriberLi
 
     @Override
     public void onLoginError() {
-        Snackbar.make(getView(), "Login error", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(getView(), R.string.login_error, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -54,10 +54,5 @@ public class MainFragment extends MainSmartFragment implements LoginSubscriberLi
         // todo obsługa ekranu po logowaniu
         Snackbar.make(getView(), "Login success", Snackbar.LENGTH_SHORT).show();
         getMainActvity().saveAuthentication(login, token);
-    }
-
-    @Override
-    public void onConnectionError() {
-        Snackbar.make(getView(), "Could not connect to server", Snackbar.LENGTH_SHORT).show();
     }
 }

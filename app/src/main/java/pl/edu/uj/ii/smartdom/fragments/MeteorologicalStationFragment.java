@@ -69,7 +69,7 @@ public class MeteorologicalStationFragment extends MainSmartFragment implements 
 
     @Override
     public void onConnectionError() {
-        Snackbar.make(getView(), "Could not connect with module", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(getView(), R.string.module_connection_error, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
