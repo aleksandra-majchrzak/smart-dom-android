@@ -3,6 +3,7 @@ package pl.edu.uj.ii.smartdom.server;
 import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
+import pl.edu.uj.ii.smartdom.server.entities.Blind;
 import pl.edu.uj.ii.smartdom.server.entities.Door;
 import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
 import pl.edu.uj.ii.smartdom.server.entities.Light;
@@ -52,4 +53,9 @@ public interface SmartDomApi {
     @GET("api/openDoor")
     public Observable<DoorResponse> isDoorOpen(@Header("Authorization") String authToken, @Query("login") String login, @Query("doorServerId") String serverId);
 
+    @POST("api/openBlind")
+    public Observable<ResponseBody> openBlind(@Header("Authorization") String authToken, @Query("login") String login, @Body Blind blind);
+
+    @POST("api/closeBlind")
+    public Observable<ResponseBody> closeBlind(@Header("Authorization") String authToken, @Query("login") String login, @Body Blind blind);
 }

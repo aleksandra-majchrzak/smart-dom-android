@@ -18,8 +18,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.edu.uj.ii.smartdom.Constants;
 import pl.edu.uj.ii.smartdom.R;
+import pl.edu.uj.ii.smartdom.fragments.BlindMotorFragment;
 import pl.edu.uj.ii.smartdom.fragments.ColorPickerFragment;
-import pl.edu.uj.ii.smartdom.fragments.DoorMotorFragment;
 import pl.edu.uj.ii.smartdom.fragments.HomesFragment;
 import pl.edu.uj.ii.smartdom.fragments.MainFragment;
 import pl.edu.uj.ii.smartdom.fragments.MeteorologicalStationFragment;
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity
                     .commit();
         } else if (id == R.id.nav_motor) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new DoorMotorFragment(), DoorMotorFragment.TAG)
+                    .replace(R.id.fragment_container, new BlindMotorFragment(), BlindMotorFragment.TAG)
                     .commit();
         } else if (id == R.id.nav_rooms) {
             getSupportFragmentManager().beginTransaction()

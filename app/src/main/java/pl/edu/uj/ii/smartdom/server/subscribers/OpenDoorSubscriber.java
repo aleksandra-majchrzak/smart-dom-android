@@ -1,6 +1,5 @@
 package pl.edu.uj.ii.smartdom.server.subscribers;
 
-import okhttp3.ResponseBody;
 import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
 import pl.edu.uj.ii.smartdom.server.listeners.OpenDoorSubscriberListener;
 import rx.Subscriber;

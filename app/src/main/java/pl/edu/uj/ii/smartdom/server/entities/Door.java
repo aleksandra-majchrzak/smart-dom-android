@@ -5,10 +5,14 @@ package pl.edu.uj.ii.smartdom.server.entities;
  */
 
 public class Door extends Module {
-    public boolean isOpen;
+    private boolean isOpen;
 
     public Door(String serverId, boolean isOpen) {
         super(serverId);
         this.isOpen = isOpen;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
     }
 }

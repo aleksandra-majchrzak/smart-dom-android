@@ -42,4 +42,10 @@
         <item>second preference value</item>
         <item>Third preference value</item>
     </array>
+
+    <string name="blind_motor">Blind motor</string>
+    <string name="open_blind">OPEN BLIND</string>
+    <string name="close_blind">CLOSE BLIND</string>
+    <string name="stop_open">STOP OPEN</string>
+    <string name="stop_closing">STOP CLOSING</string>
 </resources>

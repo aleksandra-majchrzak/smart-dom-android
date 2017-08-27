@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import okio.BufferedSource;
+import pl.edu.uj.ii.smartdom.server.entities.Blind;
 import pl.edu.uj.ii.smartdom.server.entities.Door;
 import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
 import pl.edu.uj.ii.smartdom.server.entities.Light;
@@ -88,8 +89,8 @@ public class MockSmartDomApi implements SmartDomApi {
     @Override
     public Observable<DoorResponse> openDoor(@Header("Authorization") String authToken, @Query("login") String login, @Body Door door) {
         DoorResponse resp = new DoorResponse();
-        resp.isOpen = door.isOpen;
-        MockSmartDomApi.isOpen = door.isOpen;
+        resp.isOpen = door.isOpen();
+        MockSmartDomApi.isOpen = door.isOpen();
         return Observable.just(resp);
     }
 
@@ -98,6 +99,16 @@ public class MockSmartDomApi implements SmartDomApi {
         DoorResponse resp = new DoorResponse();
         resp.isOpen = isOpen;
         return Observable.just(resp);
+    }
+
+    @Override
+    public Observable<ResponseBody> openBlind(@Header("Authorization") String authToken, @Query("login") String login, @Body Blind blind) {
+        return Observable.just(mockResponse);
+    }
+
+    @Override
+    public Observable<ResponseBody> closeBlind(@Header("Authorization") String authToken, @Query("login") String login, @Body Blind blind) {
+        return Observable.just(mockResponse);
     }
 
     private ResponseBody mockResponse = new ResponseBody() {

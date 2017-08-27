@@ -42,4 +42,10 @@
         <item>second preference value</item>
         <item>Third preference value</item>
     </array>
+
+    <string name="blind_motor">Silnik rolet</string>
+    <string name="open_blind">OTWÓRZ ROLETĘ</string>
+    <string name="close_blind">ZAMKNIJ ROLETĘ</string>
+    <string name="stop_open">ZATRZYMAJ OTWIERANIE</string>
+    <string name="stop_closing">ZATRZYMAJ ZAMYKANIE</string>
 </resources>
