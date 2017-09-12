@@ -49,18 +49,18 @@ public class BlindMotorFragment extends MainSmartFragment implements OpenBlindSu
     @OnClick(R.id.open_blind_button)
     public void onOpenBlindButtonClick() {
         if (openBlindButton.getText().equals(getString(R.string.open_blind))) {
-            SmartDomService.getInstance().openBlind(new BlindMotorModule("1234", "", "", true), this, getAuth());
+            SmartDomService.getInstance().openBlind(new BlindMotorModule("1234", "", null, true), this, getAuth());
         } else {
-            SmartDomService.getInstance().openBlind(new BlindMotorModule("1234", "", "", false), this, getAuth());
+            SmartDomService.getInstance().openBlind(new BlindMotorModule("1234", "", null, false), this, getAuth());
         }
     }
 
     @OnClick(R.id.close_blind_button)
     public void onCloseBlindButtonClick() {
         if (closeBlindButton.getText().equals(getString(R.string.close_blind))) {
-            SmartDomService.getInstance().closeBlind(new BlindMotorModule("1234", "", "", true), this, getAuth());
+            SmartDomService.getInstance().closeBlind(new BlindMotorModule("1234", "", null, true), this, getAuth());
         } else {
-            SmartDomService.getInstance().closeBlind(new BlindMotorModule("1234", "", "", false), this, getAuth());
+            SmartDomService.getInstance().closeBlind(new BlindMotorModule("1234", "", null, false), this, getAuth());
         }
     }
 

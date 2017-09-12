@@ -1,10 +1,12 @@
 package pl.edu.uj.ii.smartdom.database;
 
 import com.orm.SugarRecord;
+import com.orm.SugarTransactionHelper;
 import com.orm.dsl.Ignore;
 import com.orm.dsl.Unique;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import pl.edu.uj.ii.smartdom.server.entities.ModuleResponse;
@@ -32,15 +34,19 @@ public class Room extends SugarRecord {
             Module newModule = null;
             switch (moduleResponse.getType()) {
                 case LIGHT_MODULE:
-                    newModule = new LightModule(moduleResponse.getId(), moduleResponse.getName(), moduleResponse.getRoomId());
+                    newModule = new LightModule(moduleResponse.getId(), moduleResponse.getName(), this);
                     break;
                 case METEO_MODULE:
-                    newModule = new MeteoModule(moduleResponse.getId(), moduleResponse.getName(), moduleResponse.getRoomId());
+                    newModule = new MeteoModule(moduleResponse.getId(), moduleResponse.getName(), this);
                     break;
                 case DOOR_MOTOR_MODULE:
-                    newModule = new DoorMotorModule(moduleResponse.getId(), moduleResponse.getName(), moduleResponse.getRoomId());
+                    newModule = new DoorMotorModule(moduleResponse.getId(), moduleResponse.getName(), this);
+                    break;
+                case BLIND_MOTOR_MODULE:
+                    newModule = new BlindMotorModule(moduleResponse.getId(), moduleResponse.getName(), this);
                     break;
             }
+            newModule.setRoom(this);
             modules.add(newModule);
         }
     }
@@ -55,6 +61,10 @@ public class Room extends SugarRecord {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getServerId() {
+        return serverId;
     }
 
     @Override
@@ -73,11 +83,43 @@ public class Room extends SugarRecord {
     public static List<Room> listAll() {
         List<Room> allRooms = Room.listAll(Room.class);
         for (Room room : allRooms) {
-            room.modules.addAll(LightModule.find(LightModule.class, "ROOM_SERVER_ID = ?", room.serverId));
-            room.modules.addAll(MeteoModule.find(MeteoModule.class, "ROOM_SERVER_ID = ?", room.serverId));
-            room.modules.addAll(DoorMotorModule.find(DoorMotorModule.class, "ROOM_SERVER_ID = ?", room.serverId));
+            room.modules.addAll(Module.getAllModulesForRoom(room.serverId));
         }
 
         return allRooms;
+    }
+
+    @Override
+    public long save() {
+        final long[] saveResult = new long[1];
+        SugarTransactionHelper.doInTransaction(new SugarTransactionHelper.Callback() {
+            @Override
+            public void manipulateInTransaction() {
+                List<Module> oldModules = Module.getAllModulesForRoom(serverId);
+
+                for (Module module : modules) {
+                    module.setRoom(Room.this);
+                    module.save();
+                    Iterator<Module> oldModuleIterator = oldModules.iterator();
+                    while (oldModuleIterator.hasNext()) {
+                        Module oldModule = oldModuleIterator.next();
+                        if (oldModule.getServerId().equals(module.getServerId()))
+                            oldModuleIterator.remove();
+                    }
+                }
+
+                Module.deleteInTx(oldModules);
+                saveResult[0] = Room.super.save();
+            }
+        });
+
+
+        return saveResult[0];
+    }
+
+    public static Room findById(Long id) {
+        Room room = Room.findById(Room.class, id);
+        room.modules.addAll(Module.getAllModulesForRoom(room.serverId));
+        return room;
     }
 }

@@ -1,5 +1,7 @@
 package pl.edu.uj.ii.smartdom.database;
 
+import pl.edu.uj.ii.smartdom.enums.ModuleType;
+
 /**
  * Created by Mohru on 27.08.2017.
  */
@@ -7,12 +9,15 @@ package pl.edu.uj.ii.smartdom.database;
 public class BlindMotorModule extends Module {
     private boolean shouldStart = false;
 
-    public BlindMotorModule(String serverId, String name, String roomServerId) {
-        super(serverId, name, roomServerId);
+    public BlindMotorModule() {
     }
 
-    public BlindMotorModule(String serverId, String name, String roomServerId, boolean shouldStart) {
-        super(serverId, name, roomServerId);
+    public BlindMotorModule(String serverId, String name, Room room) {
+        super(serverId, name, room);
+    }
+
+    public BlindMotorModule(String serverId, String name, Room room, boolean shouldStart) {
+        super(serverId, name, room);
 
         this.shouldStart = shouldStart;
     }
@@ -23,5 +28,10 @@ public class BlindMotorModule extends Module {
 
     public void setShouldStart(boolean shouldStart) {
         this.shouldStart = shouldStart;
+    }
+
+    @Override
+    public ModuleType getType() {
+        return ModuleType.BLIND_MOTOR_MODULE;
     }
 }

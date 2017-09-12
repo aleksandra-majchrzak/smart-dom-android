@@ -46,7 +46,7 @@ public class DoorMotorFragment extends MainSmartFragment implements OpenDoorSubs
     Subscription openDoorSubscription;
     Subscription isDoorOpenSubscription;
 
-    private DoorMotorModule doorModule = new DoorMotorModule("1234", "", "");
+    private DoorMotorModule doorModule = new DoorMotorModule("1234", "", null);
 
     public DoorMotorFragment() {
         // Required empty public constructor

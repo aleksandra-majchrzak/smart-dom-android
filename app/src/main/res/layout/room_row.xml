@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/room_name_textView"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="[room name]"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+        android:layout_margin="3dp">
+
+        <TextView
+            android:id="@+id/room_name_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:text="[room name]"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+    </android.support.v7.widget.CardView>
+
+
 </LinearLayout>

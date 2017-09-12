@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ public class RoomsFragment extends MainSmartFragment implements GetRoomsSubscrib
     public static final String TAG = RoomsFragment.class.getName();
 
     @BindView(R.id.rooms_listView)
-    ListView roomsaListView;
+    ListView roomsListView;
 
     @BindView(R.id.rooms_placeholder_textView)
     TextView roomsPlaceholderTextView;
@@ -64,7 +65,7 @@ public class RoomsFragment extends MainSmartFragment implements GetRoomsSubscrib
     }
 
     private void initializeComponents(View fragmentView) {
-        List<Room> rooms = Room.listAll();
+        final List<Room> rooms = Room.listAll();
 
         roomsAdapter = new ArrayAdapter<Room>(getContext(), R.layout.room_row, R.id.room_name_textView, rooms) {
             @NonNull
@@ -73,7 +74,21 @@ public class RoomsFragment extends MainSmartFragment implements GetRoomsSubscrib
                 return super.getView(position, convertView, parent);
             }
         };
-        roomsaListView.setAdapter(roomsAdapter);
+        roomsListView.setAdapter(roomsAdapter);
+        roomsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle args = new Bundle();
+                args.putLong("room_id", rooms.get(position).getId());
+                RoomFragment fragment = new RoomFragment();
+                fragment.setArguments(args);
+
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, fragment, RoomFragment.TAG)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
         roomsAdapter.notifyDataSetChanged();
 
         updateViews();
@@ -88,10 +103,10 @@ public class RoomsFragment extends MainSmartFragment implements GetRoomsSubscrib
 
     private void updateViews() {
         if (roomsAdapter.getCount() == 0) {
-            roomsaListView.setVisibility(View.GONE);
+            roomsListView.setVisibility(View.GONE);
             roomsPlaceholderTextView.setVisibility(View.VISIBLE);
         } else {
-            roomsaListView.setVisibility(View.VISIBLE);
+            roomsListView.setVisibility(View.VISIBLE);
             roomsPlaceholderTextView.setVisibility(View.GONE);
         }
     }

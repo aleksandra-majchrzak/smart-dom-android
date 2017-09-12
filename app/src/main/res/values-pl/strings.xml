@@ -24,7 +24,7 @@
     <string name="door_motor">Silnik drzwi</string>
     <string name="open_door">OTWÓRZ DRZWI</string>
     <string name="close_door">ZAMKNIJ DRZWI</string>
-    <string name="add_rooms_from_web_panel_n_or_swipe_to_refresh">Dodaj pokój w panelu webowym\n lub przeciągnij palcem by odświeżyć widok</string>
+    <string name="add_rooms_from_web_panel_n_or_swipe_to_refresh">Dodaj pokój w panelu administratora\n lub przeciągnij palcem by odświeżyć widok</string>
     <string name="server_address_error">Problem z adresem serwera. Sprawdź w ustawieniach.</string>
     <string name="could_not_connect_with_server">Nie można połączyć z serwerem. Sprawdź połączenie internetowe.</string>
     <string name="login_error">Błąd logowania. Zły login lub hasło.</string>
@@ -48,4 +48,6 @@
     <string name="close_blind">ZAMKNIJ ROLETĘ</string>
     <string name="stop_open">ZATRZYMAJ OTWIERANIE</string>
     <string name="stop_closing">ZATRZYMAJ ZAMYKANIE</string>
+    <string name="no_room">Brak pokoju</string>
+    <string name="no_modules">Brak modułów. Możesz je dodać w panelu administratora.</string>
 </resources>

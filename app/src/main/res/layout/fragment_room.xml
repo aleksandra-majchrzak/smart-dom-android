@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pl.edu.uj.ii.smartdom.fragments.RoomFragment">
+
+    <ListView
+        android:id="@+id/room_modules_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
+
+    <TextView
+        android:id="@+id/room_placeholder_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/no_modules"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+</RelativeLayout>
