@@ -49,7 +49,7 @@ public class ColorPickerFragment extends MainSmartFragment implements TurnOnSubs
     Subscription setStripeSubscrition;
     Subscription setBrightnessSubscrition;
 
-    private LightModule lightModule = new LightModule("1234", "", null);
+    private LightModule lightModule;
 
     public ColorPickerFragment() {
         lastTimeColor = System.currentTimeMillis();
@@ -72,6 +72,10 @@ public class ColorPickerFragment extends MainSmartFragment implements TurnOnSubs
 
 
     private void initComponents() {
+        if (getArguments() != null && getArguments().containsKey("moduleId")) {
+            lightModule = LightModule.findById(LightModule.class, getArguments().getLong("moduleId"));
+        }
+
         colorPicker.setColorListener(new ColorPickerView.ColorListener() {
             private boolean isUpdating = false;
 

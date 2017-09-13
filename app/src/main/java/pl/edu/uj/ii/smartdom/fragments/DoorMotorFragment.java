@@ -46,7 +46,7 @@ public class DoorMotorFragment extends MainSmartFragment implements OpenDoorSubs
     Subscription openDoorSubscription;
     Subscription isDoorOpenSubscription;
 
-    private DoorMotorModule doorModule = new DoorMotorModule("1234", "", null);
+    private DoorMotorModule doorModule;
 
     public DoorMotorFragment() {
         // Required empty public constructor
@@ -59,6 +59,10 @@ public class DoorMotorFragment extends MainSmartFragment implements OpenDoorSubs
         View fragmentView = inflater.inflate(R.layout.fragment_door_motor, container, false);
 
         ButterKnife.bind(this, fragmentView);
+
+        if (getArguments() != null && getArguments().containsKey("moduleId")) {
+            doorModule = DoorMotorModule.findById(DoorMotorModule.class, getArguments().getLong("moduleId"));
+        }
 
         progress.setVisibility(View.GONE);
 

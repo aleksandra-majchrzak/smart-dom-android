@@ -64,31 +64,45 @@ public class RoomFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Module currentModule = adapter.getItem(position);
+                Bundle bundle = new Bundle();
+                bundle.putLong("moduleId", currentModule.getId());
                 switch (currentModule.getType()) {
-                    case LIGHT_MODULE:
+                    case LIGHT_MODULE: {
+                        ColorPickerFragment fragment = new ColorPickerFragment();
+                        fragment.setArguments(bundle);
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, new ColorPickerFragment(), ColorPickerFragment.TAG)
+                                .replace(R.id.fragment_container, fragment, ColorPickerFragment.TAG)
                                 .addToBackStack(null)
                                 .commit();
                         break;
-                    case DOOR_MOTOR_MODULE:
+                    }
+                    case DOOR_MOTOR_MODULE: {
+                        DoorMotorFragment fragment = new DoorMotorFragment();
+                        fragment.setArguments(bundle);
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, new DoorMotorFragment(), DoorMotorFragment.TAG)
+                                .replace(R.id.fragment_container, fragment, DoorMotorFragment.TAG)
                                 .addToBackStack(null)
                                 .commit();
                         break;
-                    case METEO_MODULE:
+                    }
+                    case METEO_MODULE: {
+                        MeteorologicalStationFragment fragment = new MeteorologicalStationFragment();
+                        fragment.setArguments(bundle);
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, new MeteorologicalStationFragment(), MeteorologicalStationFragment.TAG)
+                                .replace(R.id.fragment_container, fragment, MeteorologicalStationFragment.TAG)
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                    break;
+                    case BLIND_MOTOR_MODULE: {
+                        BlindMotorFragment fragment = new BlindMotorFragment();
+                        fragment.setArguments(bundle);
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, fragment, BlindMotorFragment.TAG)
                                 .addToBackStack(null)
                                 .commit();
                         break;
-                    case BLIND_MOTOR_MODULE:
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, new BlindMotorFragment(), BlindMotorFragment.TAG)
-                                .addToBackStack(null)
-                                .commit();
-                        break;
+                    }
                 }
             }
         });

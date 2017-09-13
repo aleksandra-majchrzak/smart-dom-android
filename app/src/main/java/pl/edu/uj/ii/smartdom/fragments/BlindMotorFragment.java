@@ -33,6 +33,8 @@ public class BlindMotorFragment extends MainSmartFragment implements OpenBlindSu
     Subscription openSubscription;
     Subscription closeSubscription;
 
+    BlindMotorModule blindModule;
+
     public BlindMotorFragment() {
         // Required empty public constructor
     }
@@ -43,24 +45,33 @@ public class BlindMotorFragment extends MainSmartFragment implements OpenBlindSu
                              Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_blind_motor, container, false);
         ButterKnife.bind(this, fragmentView);
+
+        if (getArguments() != null && getArguments().containsKey("moduleId")) {
+            blindModule = BlindMotorModule.findById(BlindMotorModule.class, getArguments().getLong("moduleId"));
+        }
+
         return fragmentView;
     }
 
     @OnClick(R.id.open_blind_button)
     public void onOpenBlindButtonClick() {
         if (openBlindButton.getText().equals(getString(R.string.open_blind))) {
-            SmartDomService.getInstance().openBlind(new BlindMotorModule("1234", "", null, true), this, getAuth());
+            blindModule.setShouldStart(true);
+            SmartDomService.getInstance().openBlind(blindModule, this, getAuth());
         } else {
-            SmartDomService.getInstance().openBlind(new BlindMotorModule("1234", "", null, false), this, getAuth());
+            blindModule.setShouldStart(false);
+            SmartDomService.getInstance().openBlind(blindModule, this, getAuth());
         }
     }
 
     @OnClick(R.id.close_blind_button)
     public void onCloseBlindButtonClick() {
         if (closeBlindButton.getText().equals(getString(R.string.close_blind))) {
-            SmartDomService.getInstance().closeBlind(new BlindMotorModule("1234", "", null, true), this, getAuth());
+            blindModule.setShouldStart(true);
+            SmartDomService.getInstance().closeBlind(blindModule, this, getAuth());
         } else {
-            SmartDomService.getInstance().closeBlind(new BlindMotorModule("1234", "", null, false), this, getAuth());
+            blindModule.setShouldStart(false);
+            SmartDomService.getInstance().closeBlind(blindModule, this, getAuth());
         }
     }
 
