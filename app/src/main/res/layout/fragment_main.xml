@@ -13,12 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="WELCOME TO SMART DOM"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+            android:layout_centerInParent="true"
+            android:src="@drawable/logo_gray" />
 
         <LinearLayout
             android:id="@+id/login_ll"
@@ -50,9 +49,11 @@
                 style="@style/Base.Widget.AppCompat.ButtonBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin"
+                android:layout_marginTop="40dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:text="@string/login_caps" />
+                android:text="@string/login_caps"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
