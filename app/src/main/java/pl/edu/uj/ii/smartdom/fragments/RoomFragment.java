@@ -20,7 +20,7 @@ import pl.edu.uj.ii.smartdom.database.Room;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RoomFragment extends Fragment {
+public class RoomFragment extends MainSmartFragment {
 
     public static final String TAG = RoomFragment.class.getName();
 
@@ -44,9 +44,8 @@ public class RoomFragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.fragment_room, container, false);
 
         ButterKnife.bind(this, fragmentView);
-
         initComponents();
-
+        setActionBarName();
         return fragmentView;
     }
 
@@ -120,4 +119,8 @@ public class RoomFragment extends Fragment {
         }
     }
 
+    @Override
+    protected String getActionBarTitle() {
+        return room.getName();
+    }
 }

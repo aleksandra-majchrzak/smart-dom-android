@@ -28,6 +28,7 @@ public class HomesFragment extends MainSmartFragment {
                              Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_homes, container, false);
         ButterKnife.bind(this, fragmentView);
+        setActionBarName();
         return fragmentView;
     }
 
@@ -40,5 +41,10 @@ public class HomesFragment extends MainSmartFragment {
     @OnClick(R.id.add_new_home_button)
     public void addNewHomeClick() {
         Toast.makeText(getContext(), "pleple", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected String getActionBarTitle() {
+        return "Homes";
     }
 }

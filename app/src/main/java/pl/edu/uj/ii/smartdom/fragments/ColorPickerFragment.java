@@ -64,9 +64,8 @@ public class ColorPickerFragment extends MainSmartFragment implements TurnOnSubs
         View fragmentView = inflater.inflate(R.layout.fragment_color_picker, container, false);
 
         ButterKnife.bind(this, fragmentView);
-
         initComponents();
-
+        setActionBarName();
         return fragmentView;
     }
 
@@ -134,6 +133,11 @@ public class ColorPickerFragment extends MainSmartFragment implements TurnOnSubs
     @Override
     public void onConnectionError() {
         Snackbar.make(getView(), R.string.module_connection_error, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected String getActionBarTitle() {
+        return lightModule.getName();
     }
 
     @Override

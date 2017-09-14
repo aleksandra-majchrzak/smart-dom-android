@@ -50,4 +50,5 @@
     <string name="stop_closing">ZATRZYMAJ ZAMYKANIE</string>
     <string name="no_room">Brak pokoju</string>
     <string name="no_modules">Brak modułów. Możesz je dodać w panelu administratora.</string>
+    <string name="rooms">Pokoje</string>
 </resources>

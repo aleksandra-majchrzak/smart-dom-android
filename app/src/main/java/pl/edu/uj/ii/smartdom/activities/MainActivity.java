@@ -18,9 +18,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.edu.uj.ii.smartdom.Constants;
 import pl.edu.uj.ii.smartdom.R;
-import pl.edu.uj.ii.smartdom.fragments.BlindMotorFragment;
-import pl.edu.uj.ii.smartdom.fragments.ColorPickerFragment;
-import pl.edu.uj.ii.smartdom.fragments.HomesFragment;
 import pl.edu.uj.ii.smartdom.fragments.MainFragment;
 import pl.edu.uj.ii.smartdom.fragments.MeteorologicalStationFragment;
 import pl.edu.uj.ii.smartdom.fragments.RoomsFragment;
@@ -127,12 +124,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         CURRENT_NAV_ITEM_ID = id;
 
-        if (id == R.id.nav_change_home) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new HomesFragment(), HomesFragment.TAG)
-                    .commit();
-
-        } else if (id == R.id.nav_logout) {
+        if (id == R.id.nav_logout) {
             SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, 0);
             prefs.edit()
                     .remove(Constants.login)
@@ -150,21 +142,13 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new SettingsFragment(), SettingsFragment.TAG)
                     .commit();
-        } else if (id == R.id.nav_family) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new ColorPickerFragment(), ColorPickerFragment.TAG)
-                    .commit();
-        } else if (id == R.id.nav_meteo) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new MeteorologicalStationFragment(), MeteorologicalStationFragment.TAG)
-                    .commit();
-        } else if (id == R.id.nav_motor) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new BlindMotorFragment(), BlindMotorFragment.TAG)
-                    .commit();
         } else if (id == R.id.nav_rooms) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new RoomsFragment(), RoomsFragment.TAG)
+                    .commit();
+        } else if (id == R.id.nav_ble) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new MeteorologicalStationFragment(), MeteorologicalStationFragment.TAG)
                     .commit();
         }
 

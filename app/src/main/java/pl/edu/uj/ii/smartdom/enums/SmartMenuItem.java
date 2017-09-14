@@ -5,12 +5,8 @@ package pl.edu.uj.ii.smartdom.enums;
  */
 
 public interface SmartMenuItem {
-    int ChangeHome = 0;
-    int Settings = 1;
-    int LogOut = 2;
-    int Family = 3;
-    int Meteo = 4;
-    int DoorMotor = 5;
-    int Rooms = 6;
-
+    int Settings = 0;
+    int LogOut = 1;
+    int Rooms = 2;
+    int BLE = 3;
 }

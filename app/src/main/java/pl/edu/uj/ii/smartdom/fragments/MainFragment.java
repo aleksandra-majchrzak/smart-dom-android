@@ -33,6 +33,7 @@ public class MainFragment extends MainSmartFragment implements LoginSubscriberLi
                              Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, fragmentView);
+        setActionBarName();
         return fragmentView;
     }
 
@@ -54,5 +55,10 @@ public class MainFragment extends MainSmartFragment implements LoginSubscriberLi
         // todo obsługa ekranu po logowaniu
         Snackbar.make(getView(), "Login success", Snackbar.LENGTH_SHORT).show();
         getMainActvity().saveAuthentication(login, token);
+    }
+
+    @Override
+    protected String getActionBarTitle() {
+        return getString(R.string.app_name);
     }
 }

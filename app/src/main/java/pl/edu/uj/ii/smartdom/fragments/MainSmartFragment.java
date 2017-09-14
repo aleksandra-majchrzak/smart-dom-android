@@ -33,4 +33,13 @@ public abstract class MainSmartFragment extends Fragment implements OnErrorListe
         if (getView() != null)
             Snackbar.make(getView(), R.string.server_address_error, Snackbar.LENGTH_SHORT).show();
     }
+
+    public void setActionBarName() {
+        android.support.v7.app.ActionBar actionBar = getMainActvity().getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(getActionBarTitle());
+        }
+    }
+
+    protected abstract String getActionBarTitle();
 }

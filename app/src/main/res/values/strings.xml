@@ -50,4 +50,5 @@
     <string name="stop_closing">STOP CLOSING</string>
     <string name="no_room">No room</string>
     <string name="no_modules">No modules. You can add them in the admin panel.</string>
+    <string name="rooms">Rooms</string>
 </resources>

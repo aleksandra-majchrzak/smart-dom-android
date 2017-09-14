@@ -49,7 +49,7 @@ public class BlindMotorFragment extends MainSmartFragment implements OpenBlindSu
         if (getArguments() != null && getArguments().containsKey("moduleId")) {
             blindModule = BlindMotorModule.findById(BlindMotorModule.class, getArguments().getLong("moduleId"));
         }
-
+        setActionBarName();
         return fragmentView;
     }
 
@@ -103,5 +103,10 @@ public class BlindMotorFragment extends MainSmartFragment implements OpenBlindSu
             openSubscription.unsubscribe();
         if (closeSubscription != null)
             closeSubscription.unsubscribe();
+    }
+
+    @Override
+    protected String getActionBarTitle() {
+        return blindModule.getName();
     }
 }

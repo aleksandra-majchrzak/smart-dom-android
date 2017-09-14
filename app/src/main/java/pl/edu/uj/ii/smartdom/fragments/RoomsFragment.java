@@ -58,9 +58,8 @@ public class RoomsFragment extends MainSmartFragment implements GetRoomsSubscrib
         View fragmentView = inflater.inflate(R.layout.fragment_rooms, container, false);
 
         ButterKnife.bind(this, fragmentView);
-
         initializeComponents(fragmentView);
-
+        setActionBarName();
         return fragmentView;
     }
 
@@ -126,6 +125,11 @@ public class RoomsFragment extends MainSmartFragment implements GetRoomsSubscrib
     public void onConnectionError() {
         super.onConnectionError();
         roomsRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    protected String getActionBarTitle() {
+        return getString(R.string.rooms);
     }
 
     @Override

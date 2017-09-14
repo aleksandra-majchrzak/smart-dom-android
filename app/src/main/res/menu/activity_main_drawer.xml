@@ -4,10 +4,6 @@
     <group
         android:id="@+id/nav_main"
         android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_change_home"
-            android:icon="@drawable/ic_home"
-            android:title="Change home" />
 
         <item
             android:id="@+id/nav_settings"
@@ -23,21 +19,13 @@
         android:id="@+id/private_menu"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_family"
-            android:icon="@drawable/ic_family"
-            android:title="Family" />
-        <item
-            android:id="@+id/nav_meteo"
-            android:icon="@drawable/ic_family"
-            android:title="Meteo" />
-        <item
-            android:id="@+id/nav_motor"
-            android:icon="@drawable/ic_lock"
-            android:title="Blind motor" />
-        <item
             android:id="@+id/nav_rooms"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Rooms" />
+        <item
+            android:id="@+id/nav_ble"
+            android:icon="@drawable/ic_family"
+            android:title="BLE modules" />
     </group>
 
 </menu>

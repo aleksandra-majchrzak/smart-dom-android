@@ -62,7 +62,7 @@ public class MeteorologicalStationFragment extends MainSmartFragment implements 
         View fragmentView = inflater.inflate(R.layout.fragment_meteorological_station, container, false);
 
         ButterKnife.bind(this, fragmentView);
-
+        setActionBarName();
         return fragmentView;
     }
 
@@ -70,6 +70,11 @@ public class MeteorologicalStationFragment extends MainSmartFragment implements 
     @Override
     public void onConnectionError() {
         Snackbar.make(getView(), R.string.module_connection_error, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected String getActionBarTitle() {
+        return meteoModule.getName();
     }
 
     @Override

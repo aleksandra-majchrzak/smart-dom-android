@@ -63,7 +63,7 @@ public class DoorMotorFragment extends MainSmartFragment implements OpenDoorSubs
         if (getArguments() != null && getArguments().containsKey("moduleId")) {
             doorModule = DoorMotorModule.findById(DoorMotorModule.class, getArguments().getLong("moduleId"));
         }
-
+        setActionBarName();
         progress.setVisibility(View.GONE);
 
         return fragmentView;
@@ -104,6 +104,11 @@ public class DoorMotorFragment extends MainSmartFragment implements OpenDoorSubs
     public void onConnectionError() {
         progress.setVisibility(View.GONE);
         Snackbar.make(getView(), R.string.module_connection_error, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected String getActionBarTitle() {
+        return doorModule.getName();
     }
 
     @Override
