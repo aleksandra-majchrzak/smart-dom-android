@@ -51,4 +51,8 @@
     <string name="no_room">Brak pokoju</string>
     <string name="no_modules">Brak modułów. Możesz je dodać w panelu administratora.</string>
     <string name="rooms">Pokoje</string>
+
+    <string name="settings">Ustawienia</string>
+    <string name="log_out">Wyloguj</string>
+    <string name="ble_modules">Moduły BLE</string>
 </resources>
