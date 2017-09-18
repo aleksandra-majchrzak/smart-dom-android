@@ -20,12 +20,12 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_rooms"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_rooms"
             android:title="@string/rooms" />
         <item
-            android:id="@+id/nav_ble"
-            android:icon="@drawable/ic_family"
-            android:title="@string/ble_modules" />
+            android:id="@+id/nav_modules"
+            android:icon="@drawable/ic_menu_modules"
+            android:title="@string/all_modules" />
     </group>
 
 </menu>

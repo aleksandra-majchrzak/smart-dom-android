@@ -55,4 +55,5 @@
     <string name="settings">Ustawienia</string>
     <string name="log_out">Wyloguj</string>
     <string name="ble_modules">Moduły BLE</string>
+    <string name="all_modules">Wszystkie moduły</string>
 </resources>

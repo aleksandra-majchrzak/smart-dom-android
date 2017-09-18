@@ -13,11 +13,13 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.edu.uj.ii.smartdom.Constants;
 import pl.edu.uj.ii.smartdom.R;
+import pl.edu.uj.ii.smartdom.enums.SmartMenuItem;
 import pl.edu.uj.ii.smartdom.fragments.MainFragment;
 import pl.edu.uj.ii.smartdom.fragments.MeteorologicalStationFragment;
 import pl.edu.uj.ii.smartdom.fragments.RoomsFragment;
@@ -65,8 +67,13 @@ public class MainActivity extends AppCompatActivity
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 if (TextUtils.isEmpty(getAuthentication().getToken())) {
                     navigationView.getMenu().setGroupVisible(R.id.private_menu, false);
+                    navigationView.getMenu().getItem(SmartMenuItem.LogOut).setVisible(false);
+                    drawerView.findViewById(R.id.username_textView).setVisibility(View.INVISIBLE);
                 } else {
                     navigationView.getMenu().setGroupVisible(R.id.private_menu, true);
+                    navigationView.getMenu().getItem(SmartMenuItem.LogOut).setVisible(true);
+                    drawerView.findViewById(R.id.username_textView).setVisibility(View.VISIBLE);
+                    ((TextView) drawerView.findViewById(R.id.username_textView)).setText(getAuthentication().getUsername());
                 }
             }
 
@@ -92,7 +99,8 @@ public class MainActivity extends AppCompatActivity
                         .replace(R.id.fragment_container, new MainFragment(), MainFragment.TAG)
                         .commit();
 
-                navigationView.getMenu().findItem(CURRENT_NAV_ITEM_ID).setChecked(false);
+                if (navigationView.getMenu().findItem(CURRENT_NAV_ITEM_ID) != null)
+                    navigationView.getMenu().findItem(CURRENT_NAV_ITEM_ID).setChecked(false);
                 CURRENT_NAV_ITEM_ID = 0;
                 drawer.closeDrawer(GravityCompat.START);
             }
@@ -146,7 +154,7 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new RoomsFragment(), RoomsFragment.TAG)
                     .commit();
-        } else if (id == R.id.nav_ble) {
+        } else if (id == R.id.nav_modules) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new MeteorologicalStationFragment(), MeteorologicalStationFragment.TAG)
                     .commit();
