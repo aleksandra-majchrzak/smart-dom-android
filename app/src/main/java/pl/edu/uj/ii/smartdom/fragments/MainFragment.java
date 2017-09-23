@@ -2,15 +2,24 @@ package pl.edu.uj.ii.smartdom.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.edu.uj.ii.smartdom.R;
+import pl.edu.uj.ii.smartdom.database.BlindMotorModule;
+import pl.edu.uj.ii.smartdom.database.LightModule;
+import pl.edu.uj.ii.smartdom.database.MeteoModule;
+import pl.edu.uj.ii.smartdom.database.Module;
+import pl.edu.uj.ii.smartdom.database.Room;
 import pl.edu.uj.ii.smartdom.server.SmartDomService;
 import pl.edu.uj.ii.smartdom.server.listeners.LoginSubscriberListener;
 
@@ -24,6 +33,18 @@ public class MainFragment extends MainSmartFragment implements LoginSubscriberLi
     @BindView(R.id.password_editText)
     EditText passwordEditText;
 
+    @BindView(R.id.login_ll)
+    LinearLayout loginLinearLayout;
+
+    @BindView(R.id.hello_tl)
+    TableLayout helloTableLayout;
+
+    @BindView(R.id.rooms_number_textView)
+    TextView roomsNumberTextView;
+
+    @BindView(R.id.modules_number_textView)
+    TextView modulesNumberTextView;
+
     public MainFragment() {
         // Required empty public constructor
     }
@@ -33,8 +54,21 @@ public class MainFragment extends MainSmartFragment implements LoginSubscriberLi
                              Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, fragmentView);
+        initComponents();
         setActionBarName();
         return fragmentView;
+    }
+
+    private void initComponents() {
+        if (getAuth() != null && !TextUtils.isEmpty(getAuth().getToken())) {
+            loginLinearLayout.setVisibility(View.GONE);
+            helloTableLayout.setVisibility(View.VISIBLE);
+            modulesNumberTextView.setText((Module.count(LightModule.class) + Module.count(BlindMotorModule.class) + Module.count(MeteoModule.class)) + "");
+            roomsNumberTextView.setText(Room.count(Room.class) + "");
+        } else {
+            loginLinearLayout.setVisibility(View.VISIBLE);
+            helloTableLayout.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.login_button)
@@ -52,9 +86,13 @@ public class MainFragment extends MainSmartFragment implements LoginSubscriberLi
 
     @Override
     public void onLoginSuccess(String login, String token) {
-        // todo obsługa ekranu po logowaniu
         Snackbar.make(getView(), "Login success", Snackbar.LENGTH_SHORT).show();
         getMainActvity().saveAuthentication(login, token);
+
+        loginLinearLayout.setVisibility(View.GONE);
+        helloTableLayout.setVisibility(View.VISIBLE);
+        modulesNumberTextView.setText((Module.count(LightModule.class) + Module.count(BlindMotorModule.class) + Module.count(MeteoModule.class)) + "");
+        roomsNumberTextView.setText(Room.count(Room.class) + "");
     }
 
     @Override
