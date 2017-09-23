@@ -56,4 +56,6 @@
     <string name="log_out">Log out</string>
     <string name="ble_modules">BLE modules</string>
     <string name="all_modules">All modules</string>
+    <string name="smoke">Smoke</string>
+    <string name="refresh">REFRESH</string>
 </resources>
