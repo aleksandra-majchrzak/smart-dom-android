@@ -16,6 +16,10 @@ public class BlindMotorModule extends Module {
         super(serverId, name, room);
     }
 
+    public BlindMotorModule(String serverId, String name, Room room, String address) {
+        super(serverId, name, room, address);
+    }
+
     public BlindMotorModule(String serverId, String name, Room room, boolean shouldStart) {
         super(serverId, name, room);
 

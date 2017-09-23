@@ -34,16 +34,16 @@ public class Room extends SugarRecord {
             Module newModule = null;
             switch (moduleResponse.getType()) {
                 case LIGHT_MODULE:
-                    newModule = new LightModule(moduleResponse.getId(), moduleResponse.getName(), this);
+                    newModule = new LightModule(moduleResponse.getId(), moduleResponse.getName(), this, moduleResponse.getAddress());
                     break;
                 case METEO_MODULE:
-                    newModule = new MeteoModule(moduleResponse.getId(), moduleResponse.getName(), this);
+                    newModule = new MeteoModule(moduleResponse.getId(), moduleResponse.getName(), this, moduleResponse.getAddress());
                     break;
                 case DOOR_MOTOR_MODULE:
-                    newModule = new DoorMotorModule(moduleResponse.getId(), moduleResponse.getName(), this);
+                    newModule = new DoorMotorModule(moduleResponse.getId(), moduleResponse.getName(), this, moduleResponse.getAddress());
                     break;
                 case BLIND_MOTOR_MODULE:
-                    newModule = new BlindMotorModule(moduleResponse.getId(), moduleResponse.getName(), this);
+                    newModule = new BlindMotorModule(moduleResponse.getId(), moduleResponse.getName(), this, moduleResponse.getAddress());
                     break;
             }
             newModule.setRoom(this);

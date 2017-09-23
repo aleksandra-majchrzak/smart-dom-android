@@ -47,7 +47,7 @@ public class MeteorologicalStationFragment extends MainSmartFragment implements 
 
     Subscription tempSubscription, humiditySubscription, coSubscription, co2Subscription, gasSubscription;
 
-    private MeteoModule meteoModule = new MeteoModule("1234", "", null);
+    private MeteoModule meteoModule = new MeteoModule("1234", "", null, "123456789");
 
 
     public MeteorologicalStationFragment() {

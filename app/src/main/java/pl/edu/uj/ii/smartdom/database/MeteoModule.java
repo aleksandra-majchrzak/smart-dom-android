@@ -20,6 +20,10 @@ public class MeteoModule extends Module {
         super(serverId, name, room);
     }
 
+    public MeteoModule(String serverId, String name, Room room, String address) {
+        super(serverId, name, room, address);
+    }
+
     public MeteoModule(String serverId, String name, Room room, double temperature, double humidity, double co, double co2, double gas) {
         super(serverId, name, room);
         this.temperature = temperature;

@@ -16,6 +16,10 @@ public class LightModule extends Module {
         super(serverId, name, room);
     }
 
+    public LightModule(String serverId, String name, Room room, String address) {
+        super(serverId, name, room, address);
+    }
+
     public LightModule(String serverId, String name, Room room, boolean isOn) {
         super(serverId, name, room);
 

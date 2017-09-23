@@ -1,5 +1,6 @@
 package pl.edu.uj.ii.smartdom.server.entities;
 
+import pl.edu.uj.ii.smartdom.enums.ConnectionType;
 import pl.edu.uj.ii.smartdom.enums.ModuleType;
 
 /**
@@ -11,6 +12,8 @@ public class ModuleResponse {
     private String name;
     private String roomId;
     private ModuleType type;
+    private ConnectionType connectionType;
+    private String address;
 
     private boolean isOn;
     private boolean isOpen;
@@ -29,5 +32,13 @@ public class ModuleResponse {
 
     public String getRoomId() {
         return roomId;
+    }
+
+    public ConnectionType getConnectionType() {
+        return connectionType;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }

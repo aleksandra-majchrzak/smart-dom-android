@@ -64,7 +64,7 @@ public class SmartDomService {
     private static SmartDomApi api;
 
     //private static final String BASE_URL = "http://192.168.100.106//";
-    //private static String BASE_URL = "https://192.168.0.129:4567/";
+    //private static String BASE_URL = "http://192.168.0.52:81/";
     private static String BASE_URL = "";
 
     private SmartDomService() {

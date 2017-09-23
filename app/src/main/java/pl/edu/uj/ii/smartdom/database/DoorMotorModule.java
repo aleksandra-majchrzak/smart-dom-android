@@ -9,11 +9,15 @@ import pl.edu.uj.ii.smartdom.enums.ModuleType;
 public class DoorMotorModule extends Module {
     private boolean isOpen = false;
 
-    public DoorMotorModule(){
+    public DoorMotorModule() {
     }
 
     public DoorMotorModule(String serverId, String name, Room room) {
         super(serverId, name, room);
+    }
+
+    public DoorMotorModule(String serverId, String name, Room room, String address) {
+        super(serverId, name, room, address);
     }
 
     public DoorMotorModule(String serverId, String name, Room room, boolean isOpen) {
