@@ -40,7 +40,6 @@
                     android:id="@+id/room_name_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:text="[room name]" />
             </LinearLayout>
         </LinearLayout>

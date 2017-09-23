@@ -20,8 +20,8 @@ import butterknife.ButterKnife;
 import pl.edu.uj.ii.smartdom.Constants;
 import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.enums.SmartMenuItem;
+import pl.edu.uj.ii.smartdom.fragments.AllModulesFragment;
 import pl.edu.uj.ii.smartdom.fragments.MainFragment;
-import pl.edu.uj.ii.smartdom.fragments.MeteorologicalStationFragment;
 import pl.edu.uj.ii.smartdom.fragments.RoomsFragment;
 import pl.edu.uj.ii.smartdom.fragments.SettingsFragment;
 import pl.edu.uj.ii.smartdom.server.entities.Authentication;
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity
                     .commit();
         } else if (id == R.id.nav_modules) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new MeteorologicalStationFragment(), MeteorologicalStationFragment.TAG)
+                    .replace(R.id.fragment_container, new AllModulesFragment(), AllModulesFragment.TAG)
                     .commit();
         }
 

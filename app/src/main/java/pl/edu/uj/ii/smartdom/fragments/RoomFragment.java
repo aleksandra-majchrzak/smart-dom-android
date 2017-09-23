@@ -16,6 +16,7 @@ import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.adapters.ModulesListAdapter;
 import pl.edu.uj.ii.smartdom.database.Module;
 import pl.edu.uj.ii.smartdom.database.Room;
+import pl.edu.uj.ii.smartdom.listeners.OnModuleItemClickListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,52 +60,7 @@ public class RoomFragment extends MainSmartFragment {
         roomModulesListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        roomModulesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Module currentModule = adapter.getItem(position);
-                Bundle bundle = new Bundle();
-                bundle.putLong("moduleId", currentModule.getId());
-                switch (currentModule.getType()) {
-                    case LIGHT_MODULE: {
-                        ColorPickerFragment fragment = new ColorPickerFragment();
-                        fragment.setArguments(bundle);
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, fragment, ColorPickerFragment.TAG)
-                                .addToBackStack(null)
-                                .commit();
-                        break;
-                    }
-                    case DOOR_MOTOR_MODULE: {
-                        DoorMotorFragment fragment = new DoorMotorFragment();
-                        fragment.setArguments(bundle);
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, fragment, DoorMotorFragment.TAG)
-                                .addToBackStack(null)
-                                .commit();
-                        break;
-                    }
-                    case METEO_MODULE: {
-                        MeteorologicalStationFragment fragment = new MeteorologicalStationFragment();
-                        fragment.setArguments(bundle);
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, fragment, MeteorologicalStationFragment.TAG)
-                                .addToBackStack(null)
-                                .commit();
-                    }
-                    break;
-                    case BLIND_MOTOR_MODULE: {
-                        BlindMotorFragment fragment = new BlindMotorFragment();
-                        fragment.setArguments(bundle);
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, fragment, BlindMotorFragment.TAG)
-                                .addToBackStack(null)
-                                .commit();
-                        break;
-                    }
-                }
-            }
-        });
+        roomModulesListView.setOnItemClickListener(new OnModuleItemClickListener(getMainActvity(), adapter));
 
         updateViews();
     }
