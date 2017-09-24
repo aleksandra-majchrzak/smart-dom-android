@@ -126,7 +126,8 @@ public class BluetoothMeteoFragment extends MainSmartFragment {
 
     @Override
     public void onConnectionError() {
-        Snackbar.make(getView(), R.string.module_connection_error, Snackbar.LENGTH_SHORT).show();
+        if (getView() != null)
+            Snackbar.make(getView(), R.string.module_connection_error, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -182,6 +183,7 @@ public class BluetoothMeteoFragment extends MainSmartFragment {
 
                     } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                         disconnectBLE();
+                        onConnectionError();
                         Log.i(TAG, "Disconnected from GATT server.");
                     }
                 }
