@@ -168,9 +168,10 @@ public class ColorPickerFragment extends MainSmartFragment implements TurnOnSubs
     }
 
     @Override
-    public void onLightOn() {
+    public void onLightOn(int brightness) {
         turnOffButton.setEnabled(true);
         turnOnButton.setEnabled(false);
+        brightnessSeekBar.setProgress(brightness);
         brightnessSeekBar.setEnabled(true);
         colorPicker.setClickable(true);
     }

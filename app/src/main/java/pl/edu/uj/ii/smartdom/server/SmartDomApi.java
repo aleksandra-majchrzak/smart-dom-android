@@ -7,6 +7,7 @@ import pl.edu.uj.ii.smartdom.server.entities.Blind;
 import pl.edu.uj.ii.smartdom.server.entities.Door;
 import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
 import pl.edu.uj.ii.smartdom.server.entities.Light;
+import pl.edu.uj.ii.smartdom.server.entities.LightResponse;
 import pl.edu.uj.ii.smartdom.server.entities.LoginResponse;
 import pl.edu.uj.ii.smartdom.server.entities.MeteoResponse;
 import pl.edu.uj.ii.smartdom.server.entities.RoomResponse;
@@ -33,7 +34,7 @@ public interface SmartDomApi {
     //todo w tych metodach powinnam tez miec odniesienie do konkretnego kontrolera- jakis id kontrolera czy cos
 
     @POST("api/turnOnLight")
-    public Observable<ResponseBody> turnOnLight(@Header("Authorization") String authToken, @Query("login") String login, @Body Light light);
+    public Observable<LightResponse> turnOnLight(@Header("Authorization") String authToken, @Query("login") String login, @Body Light light);
 
     @POST("api/turnOffLight")
     public Observable<ResponseBody> turnOffLight(@Header("Authorization") String authToken, @Query("login") String login, @Body Light light);

@@ -2,7 +2,7 @@ package pl.edu.uj.ii.smartdom.server.subscribers;
 
 import android.util.Log;
 
-import okhttp3.ResponseBody;
+import pl.edu.uj.ii.smartdom.server.entities.LightResponse;
 import pl.edu.uj.ii.smartdom.server.listeners.TurnOnSubscriberListener;
 import rx.Subscriber;
 
@@ -10,7 +10,7 @@ import rx.Subscriber;
  * Created by Mohru on 26.06.2017.
  */
 
-public class TurnOnLightSubscriber extends Subscriber<ResponseBody> {
+public class TurnOnLightSubscriber extends Subscriber<LightResponse> {
 
     private TurnOnSubscriberListener listener;
 
@@ -30,8 +30,8 @@ public class TurnOnLightSubscriber extends Subscriber<ResponseBody> {
     }
 
     @Override
-    public void onNext(ResponseBody responseBody) {
+    public void onNext(LightResponse lightResponse) {
         Log.d("TurnOnLightSub", "onNext ");
-        listener.onLightOn();
+        listener.onLightOn(lightResponse.brightness);
     }
 }

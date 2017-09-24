@@ -5,5 +5,5 @@ package pl.edu.uj.ii.smartdom.server.listeners;
  */
 
 public interface TurnOnSubscriberListener extends OnErrorListener {
-    void onLightOn();
+    void onLightOn(int brightness);
 }
