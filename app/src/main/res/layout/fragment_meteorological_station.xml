@@ -49,6 +49,12 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textStyle="bold" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\u00B0C"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
         </TableRow>
 
         <TableRow
@@ -70,6 +76,12 @@
                 android:text="-"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="%"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         </TableRow>
     </TableLayout>
@@ -101,13 +113,20 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
             <TextView
-                android:id="@+id/co2_textView"
+                android:id="@+id/lpg_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:gravity="right"
                 android:text="-"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" ppm"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         </TableRow>
 
@@ -127,9 +146,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:gravity="right"
                 android:text="-"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" ppm"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         </TableRow>
 
@@ -144,19 +170,26 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
             <TextView
-                android:id="@+id/gas_textView"
+                android:id="@+id/smoke_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:gravity="right"
                 android:text="-"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" ppm"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         </TableRow>
     </TableLayout>
 
     <Button
-        android:id="@+id/refresh_meteo_button"
+        android:id="@+id/reconnect_ble_button"
         style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

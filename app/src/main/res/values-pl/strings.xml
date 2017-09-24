@@ -57,7 +57,7 @@
     <string name="ble_modules">Moduły BLE</string>
     <string name="all_modules">Wszystkie moduły</string>
     <string name="smoke">Dym</string>
-    <string name="refresh">ODŚWIEŻ</string>
+    <string name="refresh">ODŚWIEŻ POŁĄCZENIE</string>
     <string name="number_of_rooms">Liczba pokoi:</string>
     <string name="number_of_modules">Liczba modułów:</string>
 </resources>

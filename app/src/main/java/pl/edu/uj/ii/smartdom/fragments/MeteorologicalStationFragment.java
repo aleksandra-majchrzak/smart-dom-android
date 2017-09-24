@@ -37,13 +37,13 @@ public class MeteorologicalStationFragment extends MainSmartFragment implements 
     @BindView(R.id.humidity_textView)
     TextView humidityTextView;
 
-    @BindView(R.id.co2_textView)
+    @BindView(R.id.lpg_textView)
     TextView co2TextView;
 
     @BindView(R.id.co_textView)
     TextView coTextView;
 
-    @BindView(R.id.gas_textView)
+    @BindView(R.id.smoke_textView)
     TextView gasTextView;
 
     Subscription tempSubscription, humiditySubscription, coSubscription, co2Subscription, gasSubscription;
@@ -103,7 +103,7 @@ public class MeteorologicalStationFragment extends MainSmartFragment implements 
         temperatureTextView.setText(String.valueOf(temperature));
     }
 
-    @OnClick(R.id.refresh_meteo_button)
+    @OnClick(R.id.reconnect_ble_button)
     public void onRefreshMeteoButtonClick() {
         coSubscription = SmartDomService.getInstance().getCO(this, getAuth(), meteoModule);
         co2Subscription = SmartDomService.getInstance().getCO2(this, getAuth(), meteoModule);

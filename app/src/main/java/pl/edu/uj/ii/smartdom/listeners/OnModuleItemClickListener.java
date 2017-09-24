@@ -9,9 +9,9 @@ import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.adapters.ModulesListAdapter;
 import pl.edu.uj.ii.smartdom.database.Module;
 import pl.edu.uj.ii.smartdom.fragments.BlindMotorFragment;
+import pl.edu.uj.ii.smartdom.fragments.BluetoothMeteoFragment;
 import pl.edu.uj.ii.smartdom.fragments.ColorPickerFragment;
 import pl.edu.uj.ii.smartdom.fragments.DoorMotorFragment;
-import pl.edu.uj.ii.smartdom.fragments.MeteorologicalStationFragment;
 
 /**
  * Created by Mohru on 23.09.2017.
@@ -52,10 +52,10 @@ public class OnModuleItemClickListener implements AdapterView.OnItemClickListene
                 break;
             }
             case METEO_MODULE: {
-                MeteorologicalStationFragment fragment = new MeteorologicalStationFragment();
+                BluetoothMeteoFragment fragment = new BluetoothMeteoFragment();
                 fragment.setArguments(bundle);
                 activity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, fragment, MeteorologicalStationFragment.TAG)
+                        .replace(R.id.fragment_container, fragment, BluetoothMeteoFragment.TAG)
                         .addToBackStack(null)
                         .commit();
             }
