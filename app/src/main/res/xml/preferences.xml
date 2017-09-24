@@ -11,25 +11,41 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="second_section_preference"
-        android:title="title second section">
-
-        <ListPreference
-            android:dependency="second_section_preference"
-            android:dialogTitle="dialog title list preference"
-            android:entries="@array/entries_list_preference"
-            android:entryValues="@array/entryvalues_list_preference"
-            android:key="list_preference"
-            android:title="title list preference" />
+        android:key="licences_preference"
+        android:title="Wykorzystane biblioteki">
 
         <Preference
-            android:dependency="second_section_preference"
-            android:title="title intent preference">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="http://codepath.com/" />
-        </Preference>
-
+            android:dependency="licences_preference"
+            android:key="butterknife_preference"
+            android:title="Butter Knife" />
+        <Preference
+            android:dependency="licences_preference"
+            android:key="support_preference"
+            android:title="Android Support Library" />
+        <Preference
+            android:dependency="licences_preference"
+            android:key="colorpickerview_preference"
+            android:title="ColorPickerView" />
+        <Preference
+            android:dependency="licences_preference"
+            android:key="retrofit_preference"
+            android:title="Retrofit" />
+        <Preference
+            android:dependency="licences_preference"
+            android:key="okhttp_preference"
+            android:title="OkHttp" />
+        <Preference
+            android:dependency="licences_preference"
+            android:key="rxandroid_preference"
+            android:title="RxAndroid" />
+        <Preference
+            android:dependency="licences_preference"
+            android:key="rxjava_preference"
+            android:title="RxJava" />
+        <Preference
+            android:dependency="licences_preference"
+            android:key="sugar_preference"
+            android:title="Sugar" />
     </PreferenceCategory>
 
 </PreferenceScreen>
