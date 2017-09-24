@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,12 +25,15 @@ public class AllModulesFragment extends MainSmartFragment {
 
     @BindView(R.id.all_modules_listView)
     ListView modulesListView;
+
+    @BindView(R.id.room_placeholder_textView)
+    TextView modulesPlaceholderTextView;
+
     private ModulesListAdapter adapter;
 
     public AllModulesFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +52,18 @@ public class AllModulesFragment extends MainSmartFragment {
         modulesListView.setAdapter(adapter);
         modulesListView.setOnItemClickListener(new OnModuleItemClickListener(getMainActvity(), adapter));
         adapter.notifyDataSetChanged();
+
+        updateViews();
+    }
+
+    private void updateViews() {
+        if (adapter.getCount() == 0) {
+            modulesListView.setVisibility(View.GONE);
+            modulesPlaceholderTextView.setVisibility(View.VISIBLE);
+        } else {
+            modulesListView.setVisibility(View.VISIBLE);
+            modulesPlaceholderTextView.setVisibility(View.GONE);
+        }
     }
 
     @Override
