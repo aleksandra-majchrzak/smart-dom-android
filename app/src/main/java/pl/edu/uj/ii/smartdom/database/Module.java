@@ -9,6 +9,7 @@ import com.orm.dsl.Unique;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.edu.uj.ii.smartdom.enums.ConnectionType;
 import pl.edu.uj.ii.smartdom.enums.ModuleType;
 
 /**
@@ -24,6 +25,7 @@ public abstract class Module extends SugarRecord {
     @Ignore
     protected Room room;
     protected String address;
+    protected ConnectionType connectionType;
 
     public Module() {
     }
@@ -34,8 +36,9 @@ public abstract class Module extends SugarRecord {
         this.room = room;
     }
 
-    public Module(String serverId, String name, Room room, String address) {
+    public Module(String serverId, String name, Room room, ConnectionType connectionType, String address) {
         this(serverId, name, room);
+        this.connectionType = connectionType;
         this.address = address;
     }
 
@@ -66,6 +69,10 @@ public abstract class Module extends SugarRecord {
 
     public String getAddress() {
         return address;
+    }
+
+    public ConnectionType getConnectionType() {
+        return connectionType;
     }
 
     public static List<Module> getAllModulesForRoom(String roomServerId) {

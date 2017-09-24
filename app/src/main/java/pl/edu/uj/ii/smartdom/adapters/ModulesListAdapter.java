@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.database.Module;
+import pl.edu.uj.ii.smartdom.enums.ConnectionType;
 
 /**
  * Created by Mohru on 09.09.2017.
@@ -64,6 +65,12 @@ public class ModulesListAdapter extends ArrayAdapter<Module> {
         } else
             holder.roomName.setVisibility(View.GONE);
 
+        if (currentModule.getConnectionType() == ConnectionType.BLE) {
+            holder.connectionIcon.setImageResource(R.drawable.bluetooth);
+        } else {
+            holder.connectionIcon.setImageResource(R.drawable.wifi);
+        }
+
         return convertView;
     }
 
@@ -74,6 +81,8 @@ public class ModulesListAdapter extends ArrayAdapter<Module> {
         TextView moduleName;
         @BindView(R.id.room_name_textView)
         TextView roomName;
+        @BindView(R.id.connection_icon)
+        ImageView connectionIcon;
 
         public ModuleViewHolder(View view) {
             ButterKnife.bind(this, view);

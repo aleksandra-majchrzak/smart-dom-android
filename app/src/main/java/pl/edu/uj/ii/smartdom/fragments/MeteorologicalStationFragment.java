@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.database.MeteoModule;
+import pl.edu.uj.ii.smartdom.enums.ConnectionType;
 import pl.edu.uj.ii.smartdom.server.SmartDomService;
 import pl.edu.uj.ii.smartdom.server.listeners.GetCO2SubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetCOSubscriberListener;
@@ -47,7 +48,7 @@ public class MeteorologicalStationFragment extends MainSmartFragment implements 
 
     Subscription tempSubscription, humiditySubscription, coSubscription, co2Subscription, gasSubscription;
 
-    private MeteoModule meteoModule = new MeteoModule("1234", "", null, "123456789");
+    private MeteoModule meteoModule = new MeteoModule("1234", "", null, ConnectionType.BLE, "123456789");
 
 
     public MeteorologicalStationFragment() {

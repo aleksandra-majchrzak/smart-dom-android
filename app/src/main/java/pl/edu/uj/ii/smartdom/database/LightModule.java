@@ -1,5 +1,6 @@
 package pl.edu.uj.ii.smartdom.database;
 
+import pl.edu.uj.ii.smartdom.enums.ConnectionType;
 import pl.edu.uj.ii.smartdom.enums.ModuleType;
 
 /**
@@ -16,8 +17,8 @@ public class LightModule extends Module {
         super(serverId, name, room);
     }
 
-    public LightModule(String serverId, String name, Room room, String address) {
-        super(serverId, name, room, address);
+    public LightModule(String serverId, String name, Room room, ConnectionType connectionType, String address) {
+        super(serverId, name, room, connectionType, address);
     }
 
     public LightModule(String serverId, String name, Room room, boolean isOn) {

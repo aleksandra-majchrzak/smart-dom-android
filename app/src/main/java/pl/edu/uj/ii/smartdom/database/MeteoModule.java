@@ -1,5 +1,6 @@
 package pl.edu.uj.ii.smartdom.database;
 
+import pl.edu.uj.ii.smartdom.enums.ConnectionType;
 import pl.edu.uj.ii.smartdom.enums.ModuleType;
 
 /**
@@ -20,8 +21,8 @@ public class MeteoModule extends Module {
         super(serverId, name, room);
     }
 
-    public MeteoModule(String serverId, String name, Room room, String address) {
-        super(serverId, name, room, address);
+    public MeteoModule(String serverId, String name, Room room, ConnectionType connectionType, String address) {
+        super(serverId, name, room, connectionType, address);
     }
 
     public MeteoModule(String serverId, String name, Room room, double temperature, double humidity, double co, double co2, double gas) {
