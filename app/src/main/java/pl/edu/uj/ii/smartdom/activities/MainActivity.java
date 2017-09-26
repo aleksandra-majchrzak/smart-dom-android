@@ -3,7 +3,9 @@ package pl.edu.uj.ii.smartdom.activities;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView;
 
     private int CURRENT_NAV_ITEM_ID = 0;
+    private boolean isBackFirstPressed = true;
 
     private Authentication authentication;
 
@@ -115,7 +118,25 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+
+            if (getSupportFragmentManager().getBackStackEntryCount() < 1) {
+                if (isBackFirstPressed) {
+                    isBackFirstPressed = false;
+                    Snackbar.make(findViewById(android.R.id.content), R.string.click_to_exit, Snackbar.LENGTH_LONG)
+                            .show();
+
+                    new Handler(getMainLooper()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            isBackFirstPressed = true;
+                        }
+                    }, 2000);
+                } else {
+                    super.onBackPressed();
+                }
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
