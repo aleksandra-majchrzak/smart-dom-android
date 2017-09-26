@@ -32,17 +32,14 @@ public class SSLUtils {
 
     public static void initSSLConfig(Context context) {
         try {
-            AssetManager assetManager = context.getResources().getAssets();
-            InputStream inputStream = assetManager.open(Constants.CERTIFICATE_FILE_NAME);
-
-            CertificateFactory factory = CertificateFactory.getInstance("X.509");   // jedyny dosteny typ into: https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html
-            InputStream certInput = new BufferedInputStream(inputStream);
-            Certificate cert = factory.generateCertificate(certInput);
+            Certificate cert = generateCertificate(context, Constants.CERTIFICATE_FILE_NAME);
+            Certificate certAndroid = generateCertificate(context, Constants.CERTIFICATE_ANDROID_FILE_NAME);
 
             String keyStoreType = KeyStore.getDefaultType();
             KeyStore keyStore = KeyStore.getInstance(keyStoreType);
             keyStore.load(null, null);
             keyStore.setCertificateEntry("ca", cert);
+            keyStore.setCertificateEntry("caAndroid", certAndroid);
 
             String trustManagerAlg = TrustManagerFactory.getDefaultAlgorithm();
             TrustManagerFactory trustFactory = TrustManagerFactory.getInstance(trustManagerAlg);
@@ -60,6 +57,15 @@ public class SSLUtils {
         } catch (CertificateException | NoSuchAlgorithmException | KeyManagementException | KeyStoreException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static Certificate generateCertificate(Context context, String certificateFileName) throws IOException, CertificateException {
+        AssetManager assetManager = context.getResources().getAssets();
+        InputStream inputStream = assetManager.open(certificateFileName);
+
+        CertificateFactory factory = CertificateFactory.getInstance("X.509");   // jedyny dosteny typ into: https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html
+        InputStream certInput = new BufferedInputStream(inputStream);
+        return factory.generateCertificate(certInput);
     }
 
     public static SSLContext getSslContext() {
