@@ -1,8 +1,11 @@
 package pl.edu.uj.ii.smartdom.server.subscribers;
 
+import com.orm.SugarTransactionHelper;
+
 import java.util.ArrayList;
 
 import pl.edu.uj.ii.smartdom.database.Room;
+import pl.edu.uj.ii.smartdom.database.UsersRooms;
 import pl.edu.uj.ii.smartdom.server.entities.RoomResponse;
 import pl.edu.uj.ii.smartdom.server.listeners.GetRoomsSubscriberListener;
 import rx.Subscriber;
@@ -14,9 +17,13 @@ import rx.Subscriber;
 public class GetRoomsSubscriber extends Subscriber<ArrayList<RoomResponse>> {
 
     private GetRoomsSubscriberListener listener;
+    private String username;
+    private String serverAddress;
 
-    public GetRoomsSubscriber(GetRoomsSubscriberListener listener) {
+    public GetRoomsSubscriber(GetRoomsSubscriberListener listener, String username, String serverAddress) {
         this.listener = listener;
+        this.username = username;
+        this.serverAddress = serverAddress;
     }
 
     @Override
@@ -31,13 +38,20 @@ public class GetRoomsSubscriber extends Subscriber<ArrayList<RoomResponse>> {
 
     @Override
     public void onNext(ArrayList<RoomResponse> rooms) {
-        ArrayList<Room> roomList = new ArrayList<>();
-        Room.deleteAll(Room.class);
+        final ArrayList<Room> roomList = new ArrayList<>();
+        UsersRooms.deleteAll(UsersRooms.class, "USER_NAME = ?", username);
 
         for (RoomResponse r : rooms) {
-            Room newRoom = new Room(r);
-            newRoom.save();
-            roomList.add(newRoom);
+            final Room newRoom = new Room(r);
+            SugarTransactionHelper.doInTransaction(new SugarTransactionHelper.Callback() {
+                @Override
+                public void manipulateInTransaction() {
+                    newRoom.save();
+                    UsersRooms usersRooms = new UsersRooms(username, newRoom.getServerId(), serverAddress);
+                    usersRooms.save();
+                    roomList.add(newRoom);
+                }
+            });
         }
 
         listener.onRoomsLoaded(roomList);

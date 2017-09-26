@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity
                     .remove(Constants.login)
                     .remove(Constants.token)
                     .commit();
-            authentication = new Authentication("", "");
+            authentication = new Authentication("", "", "");
             navigationView.getMenu().setGroupVisible(R.id.private_menu, false);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new MainFragment(), MainFragment.TAG)
@@ -167,7 +167,9 @@ public class MainActivity extends AppCompatActivity
     public Authentication getAuthentication() {
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, 0);
         if (authentication == null)
-            authentication = new Authentication(prefs.getString(Constants.login, ""), prefs.getString(Constants.token, ""));
+            authentication = new Authentication(prefs.getString(Constants.login, ""),
+                    prefs.getString(Constants.token, ""),
+                    prefs.getString(Constants.WEB_SERVER_PREFERENCE, ""));
 
         return authentication;
     }
@@ -176,6 +178,6 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, 0);
         prefs.edit().putString(Constants.login, login).putString(Constants.token, token).apply();
 
-        authentication = new Authentication(login, token);
+        authentication = new Authentication(login, token, prefs.getString(Constants.WEB_SERVER_PREFERENCE, ""));
     }
 }

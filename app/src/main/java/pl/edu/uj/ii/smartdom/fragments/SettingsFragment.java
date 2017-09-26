@@ -1,6 +1,7 @@
 package pl.edu.uj.ii.smartdom.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import pl.edu.uj.ii.smartdom.Constants;
 import pl.edu.uj.ii.smartdom.R;
 import pl.edu.uj.ii.smartdom.activities.MainActivity;
 import pl.edu.uj.ii.smartdom.server.SmartDomService;
@@ -49,10 +51,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         view.setBackgroundResource(R.color.background);
 
-        final EditTextPreference serverPref = ((EditTextPreference) getPreferenceManager().findPreference("web_server_preference"));
+        final EditTextPreference serverPref = ((EditTextPreference) getPreferenceManager().findPreference(Constants.WEB_SERVER_PREFERENCE));
         serverPref.setSummary(serverPref.getText());
         serverPref.setDialogLayoutResource(R.layout.preference_dialog_edittext);
         serverPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @SuppressLint("CommitPrefEdits")
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 String newAddress = (String) newValue;
@@ -64,6 +67,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 serverPref.setSummary(newAddress);
                 SmartDomService.resetService();
                 SmartDomService.setServerAddress(newAddress);
+                getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, 0)
+                        .edit()
+                        .putString(Constants.WEB_SERVER_PREFERENCE, newAddress)
+                        .commit();
                 return true;
             }
         });

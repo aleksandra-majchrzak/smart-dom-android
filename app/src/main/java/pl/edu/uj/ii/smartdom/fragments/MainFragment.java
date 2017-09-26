@@ -91,8 +91,8 @@ public class MainFragment extends MainSmartFragment implements LoginSubscriberLi
 
         loginLinearLayout.setVisibility(View.GONE);
         helloTableLayout.setVisibility(View.VISIBLE);
-        modulesNumberTextView.setText((Module.count(LightModule.class) + Module.count(BlindMotorModule.class) + Module.count(MeteoModule.class)) + "");
-        roomsNumberTextView.setText(Room.count(Room.class) + "");
+        modulesNumberTextView.setText(Module.getModulesForUser(getAuth().getUsername(), getAuth().getServerAddress()).size() + "");
+        roomsNumberTextView.setText(Room.getRoomsForUser(getAuth().getUsername(), getAuth().getServerAddress()).size() + "");
     }
 
     @Override

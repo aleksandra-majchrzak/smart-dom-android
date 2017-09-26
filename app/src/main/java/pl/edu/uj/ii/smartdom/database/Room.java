@@ -80,10 +80,15 @@ public class Room extends SugarRecord {
         this.modules = modules;
     }
 
-    public static List<Room> listAll() {
-        List<Room> allRooms = Room.listAll(Room.class);
+    public static List<Room> getRoomsForUser(String username, String serverAddress) {
+        List<Room> allRooms = Room.findWithQuery(Room.class,
+                "SELECT r.* FROM USERS_ROOMS ur " +
+                        "JOIN ROOM r ON r.SERVER_ID = ur.ROOM_SERVER_ID " +
+                        "WHERE ur.USER_NAME = ? AND ur.SERVER_ADDRESS = ? ",
+                username, serverAddress);
+
         for (Room room : allRooms) {
-            room.modules.addAll(Module.getAllModulesForRoom(room.serverId));
+            room.modules = Module.getAllModulesForRoom(room.getServerId());
         }
 
         return allRooms;
@@ -112,7 +117,6 @@ public class Room extends SugarRecord {
                 saveResult[0] = Room.super.save();
             }
         });
-
 
         return saveResult[0];
     }

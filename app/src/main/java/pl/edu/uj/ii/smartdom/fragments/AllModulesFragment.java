@@ -48,7 +48,7 @@ public class AllModulesFragment extends MainSmartFragment {
     }
 
     private void initComponents() {
-        adapter = new ModulesListAdapter(getContext(), Module.listAll(), true);
+        adapter = new ModulesListAdapter(getContext(), Module.getModulesForUser(getAuth().getUsername(), getAuth().getServerAddress()), true);
         modulesListView.setAdapter(adapter);
         modulesListView.setOnItemClickListener(new OnModuleItemClickListener(getMainActvity(), adapter));
         adapter.notifyDataSetChanged();

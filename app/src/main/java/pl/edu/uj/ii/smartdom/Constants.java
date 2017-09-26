@@ -10,5 +10,6 @@ public abstract class Constants {
     public static final String SHARED_PREFERENCES = "SHARED_PREFERENCES";
     public static final String token = "token";
     public static final String login = "login";
+    public static final String WEB_SERVER_PREFERENCE = "web_server_preference";
 
 }

@@ -23,6 +23,6 @@ public class SmartDomApplication extends SugarApp {
 
     private void setServiceAddress() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SmartDomService.setServerAddress(prefs.getString("web_server_preference", ""));
+        SmartDomService.setServerAddress(prefs.getString(Constants.WEB_SERVER_PREFERENCE, ""));
     }
 }

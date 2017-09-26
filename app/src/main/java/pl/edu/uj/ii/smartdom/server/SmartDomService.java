@@ -121,7 +121,7 @@ public class SmartDomService {
             return api.getRooms(authen.getToken(), authen.getUsername())
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new GetRoomsSubscriber(listener));
+                    .subscribe(new GetRoomsSubscriber(listener, authen.getUsername(), authen.getServerAddress()));
         } else {
             listener.onServerNotSet();
             return null;

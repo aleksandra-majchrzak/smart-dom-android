@@ -7,10 +7,12 @@ package pl.edu.uj.ii.smartdom.server.entities;
 public class Authentication {
     private String username;
     private String token;
+    private String serverAddress;
 
-    public Authentication(String username, String token) {
+    public Authentication(String username, String token, String serverAddress) {
         this.username = username;
         this.token = token;
+        this.serverAddress = serverAddress;
     }
 
     public String getUsername() {
@@ -19,5 +21,9 @@ public class Authentication {
 
     public String getToken() {
         return token;
+    }
+
+    public String getServerAddress() {
+        return serverAddress;
     }
 }

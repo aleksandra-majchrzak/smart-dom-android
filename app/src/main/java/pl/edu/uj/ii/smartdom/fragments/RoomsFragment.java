@@ -64,7 +64,7 @@ public class RoomsFragment extends MainSmartFragment implements GetRoomsSubscrib
     }
 
     private void initializeComponents(View fragmentView) {
-        final List<Room> rooms = Room.listAll();
+        final List<Room> rooms = Room.getRoomsForUser(getAuth().getUsername(), getAuth().getServerAddress());
 
         roomsAdapter = new ArrayAdapter<Room>(getContext(), R.layout.room_row, R.id.room_name_textView, rooms) {
             @NonNull

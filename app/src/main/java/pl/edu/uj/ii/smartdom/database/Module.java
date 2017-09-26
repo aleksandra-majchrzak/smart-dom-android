@@ -84,11 +84,23 @@ public abstract class Module extends SugarRecord {
         return modules;
     }
 
-    public static List<Module> listAll() {
+    public static List<Module> getModulesForUser(String username, String serverAddress) {
         List<Module> modules = new ArrayList<>();
-        modules.addAll(LightModule.listAll(LightModule.class));
-        modules.addAll(MeteoModule.listAll(MeteoModule.class));
-        modules.addAll(BlindMotorModule.listAll(BlindMotorModule.class));
+        modules.addAll(LightModule.findWithQuery(LightModule.class,
+                "SELECT m.* FROM USERS_ROOMS ur " +
+                        "JOIN LIGHT_MODULE m ON m.ROOM_SERVER_ID = ur.ROOM_SERVER_ID " +
+                        "WHERE ur.USER_NAME = ? AND ur.SERVER_ADDRESS = ? ",
+                username, serverAddress));
+        modules.addAll(MeteoModule.findWithQuery(MeteoModule.class,
+                "SELECT m.* FROM USERS_ROOMS ur " +
+                        "JOIN METEO_MODULE m ON m.ROOM_SERVER_ID = ur.ROOM_SERVER_ID " +
+                        "WHERE ur.USER_NAME = ? AND ur.SERVER_ADDRESS = ? ",
+                username, serverAddress));
+        modules.addAll(BlindMotorModule.findWithQuery(BlindMotorModule.class,
+                "SELECT m.* FROM USERS_ROOMS ur " +
+                        "JOIN BLIND_MOTOR_MODULE m ON m.ROOM_SERVER_ID = ur.ROOM_SERVER_ID " +
+                        "WHERE ur.USER_NAME = ? AND ur.SERVER_ADDRESS = ? ",
+                username, serverAddress));
 
         for (Module module : modules) {
             if (!TextUtils.isEmpty(module.roomServerId)) {
