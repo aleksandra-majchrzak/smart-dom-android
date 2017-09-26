@@ -41,10 +41,6 @@ public class Room extends SugarRecord {
                     newModule = new MeteoModule(moduleResponse.getId(), moduleResponse.getName(),
                             this, moduleResponse.getConnectionType(), moduleResponse.getAddress());
                     break;
-                case DOOR_MOTOR_MODULE:
-                    newModule = new DoorMotorModule(moduleResponse.getId(), moduleResponse.getName(),
-                            this, moduleResponse.getConnectionType(), moduleResponse.getAddress());
-                    break;
                 case BLIND_MOTOR_MODULE:
                     newModule = new BlindMotorModule(moduleResponse.getId(), moduleResponse.getName(),
                             this, moduleResponse.getConnectionType(), moduleResponse.getAddress());

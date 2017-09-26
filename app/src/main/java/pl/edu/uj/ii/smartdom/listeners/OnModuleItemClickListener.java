@@ -11,7 +11,6 @@ import pl.edu.uj.ii.smartdom.database.Module;
 import pl.edu.uj.ii.smartdom.fragments.BlindMotorFragment;
 import pl.edu.uj.ii.smartdom.fragments.BluetoothMeteoFragment;
 import pl.edu.uj.ii.smartdom.fragments.ColorPickerFragment;
-import pl.edu.uj.ii.smartdom.fragments.DoorMotorFragment;
 
 /**
  * Created by Mohru on 23.09.2017.
@@ -38,15 +37,6 @@ public class OnModuleItemClickListener implements AdapterView.OnItemClickListene
                 fragment.setArguments(bundle);
                 activity.getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, fragment, ColorPickerFragment.TAG)
-                        .addToBackStack(null)
-                        .commit();
-                break;
-            }
-            case DOOR_MOTOR_MODULE: {
-                DoorMotorFragment fragment = new DoorMotorFragment();
-                fragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, fragment, DoorMotorFragment.TAG)
                         .addToBackStack(null)
                         .commit();
                 break;

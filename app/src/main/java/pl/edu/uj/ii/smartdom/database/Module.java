@@ -79,7 +79,6 @@ public abstract class Module extends SugarRecord {
         List<Module> modules = new ArrayList<>();
         modules.addAll(LightModule.find(LightModule.class, "ROOM_SERVER_ID = ?", roomServerId));
         modules.addAll(MeteoModule.find(MeteoModule.class, "ROOM_SERVER_ID = ?", roomServerId));
-        modules.addAll(DoorMotorModule.find(DoorMotorModule.class, "ROOM_SERVER_ID = ?", roomServerId));
         modules.addAll(BlindMotorModule.find(BlindMotorModule.class, "ROOM_SERVER_ID = ?", roomServerId));
 
         return modules;
@@ -89,7 +88,6 @@ public abstract class Module extends SugarRecord {
         List<Module> modules = new ArrayList<>();
         modules.addAll(LightModule.listAll(LightModule.class));
         modules.addAll(MeteoModule.listAll(MeteoModule.class));
-        modules.addAll(DoorMotorModule.listAll(DoorMotorModule.class));
         modules.addAll(BlindMotorModule.listAll(BlindMotorModule.class));
 
         for (Module module : modules) {

@@ -46,9 +46,6 @@ public class ModulesListAdapter extends ArrayAdapter<Module> {
             case LIGHT_MODULE:
                 holder.moduleIcon.setImageResource(R.drawable.light_icon);
                 break;
-            case DOOR_MOTOR_MODULE:
-                holder.moduleIcon.setImageResource(R.drawable.ic_lock_open);
-                break;
             case METEO_MODULE:
                 holder.moduleIcon.setImageResource(R.drawable.meteo_icon);
                 break;

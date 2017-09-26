@@ -8,12 +8,10 @@ import java.util.Map;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import pl.edu.uj.ii.smartdom.database.BlindMotorModule;
-import pl.edu.uj.ii.smartdom.database.DoorMotorModule;
 import pl.edu.uj.ii.smartdom.database.LightModule;
 import pl.edu.uj.ii.smartdom.database.MeteoModule;
 import pl.edu.uj.ii.smartdom.server.entities.Authentication;
 import pl.edu.uj.ii.smartdom.server.entities.Blind;
-import pl.edu.uj.ii.smartdom.server.entities.Door;
 import pl.edu.uj.ii.smartdom.server.entities.Light;
 import pl.edu.uj.ii.smartdom.server.entities.User;
 import pl.edu.uj.ii.smartdom.server.listeners.CloseBlindSubscriberListener;
@@ -23,11 +21,9 @@ import pl.edu.uj.ii.smartdom.server.listeners.GetGasSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetHumiditySubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetRoomsSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.GetTempSubscriberListener;
-import pl.edu.uj.ii.smartdom.server.listeners.IsDoorOpenSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.LoginSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.OnErrorListener;
 import pl.edu.uj.ii.smartdom.server.listeners.OpenBlindSubscriberListener;
-import pl.edu.uj.ii.smartdom.server.listeners.OpenDoorSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.TurnOffLightSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.listeners.TurnOnSubscriberListener;
 import pl.edu.uj.ii.smartdom.server.subscribers.CloseBlindSubscriber;
@@ -37,10 +33,8 @@ import pl.edu.uj.ii.smartdom.server.subscribers.GetGasSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetHumiditySubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetRoomsSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.GetTempSubscriber;
-import pl.edu.uj.ii.smartdom.server.subscribers.IsDoorOpenSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.LoginSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.OpenBlindSubscriber;
-import pl.edu.uj.ii.smartdom.server.subscribers.OpenDoorSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.SetStripBrightnessSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.SetStripeColorSubscriber;
 import pl.edu.uj.ii.smartdom.server.subscribers.TurnOffLightSubscriber;
@@ -241,30 +235,6 @@ public class SmartDomService {
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new GetGasSubscriber(listener));
-        } else {
-            listener.onServerNotSet();
-            return null;
-        }
-    }
-
-    public Subscription openDoor(DoorMotorModule door, OpenDoorSubscriberListener listener, Authentication authen) {
-        if (hasBaseURL()) {
-            return api.openDoor(authen.getToken(), authen.getUsername(), new Door(door.getServerId(), !door.isOpen()))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new OpenDoorSubscriber(listener));
-        } else {
-            listener.onServerNotSet();
-            return null;
-        }
-    }
-
-    public Subscription isDoorOpen(DoorMotorModule door, IsDoorOpenSubscriberListener listener, Authentication authen) {
-        if (hasBaseURL()) {
-            return api.isDoorOpen(authen.getToken(), authen.getUsername(), door.getServerId())
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new IsDoorOpenSubscriber(listener));
         } else {
             listener.onServerNotSet();
             return null;

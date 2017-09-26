@@ -8,8 +8,6 @@ import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import okio.BufferedSource;
 import pl.edu.uj.ii.smartdom.server.entities.Blind;
-import pl.edu.uj.ii.smartdom.server.entities.Door;
-import pl.edu.uj.ii.smartdom.server.entities.DoorResponse;
 import pl.edu.uj.ii.smartdom.server.entities.Light;
 import pl.edu.uj.ii.smartdom.server.entities.LightResponse;
 import pl.edu.uj.ii.smartdom.server.entities.LoginResponse;
@@ -86,21 +84,6 @@ public class MockSmartDomApi implements SmartDomApi {
         }
 
         return Observable.just(result);
-    }
-
-    @Override
-    public Observable<DoorResponse> openDoor(@Header("Authorization") String authToken, @Query("login") String login, @Body Door door) {
-        DoorResponse resp = new DoorResponse();
-        resp.isOpen = door.isOpen();
-        MockSmartDomApi.isOpen = door.isOpen();
-        return Observable.just(resp);
-    }
-
-    @Override
-    public Observable<DoorResponse> isDoorOpen(@Header("Authorization") String authToken, @Query("login") String login, @Query("doorServerId") String serverId) {
-        DoorResponse resp = new DoorResponse();
-        resp.isOpen = isOpen;
-        return Observable.just(resp);
     }
 
     @Override
