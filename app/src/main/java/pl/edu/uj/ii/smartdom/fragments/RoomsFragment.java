@@ -112,7 +112,7 @@ public class RoomsFragment extends MainSmartFragment implements GetRoomsSubscrib
 
     @Override
     public void onRoomsLoaded(ArrayList<Room> rooms) {
-        Snackbar.make(getView(), "Rooms loaded", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(getView(), R.string.rooms_loaded, Snackbar.LENGTH_SHORT).show();
         roomsAdapter.clear();
         roomsAdapter.addAll(rooms);
         roomsAdapter.notifyDataSetChanged();

@@ -61,4 +61,5 @@
     <string name="number_of_rooms">Liczba pokoi:</string>
     <string name="number_of_modules">Liczba modułów:</string>
     <string name="click_to_exit">Naciśnij jeszcze raz aby wyjść z aplikacji.</string>
+    <string name="rooms_loaded">Lista pokoi załadowana</string>
 </resources>
